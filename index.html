@@ -1,0 +1,2288 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FaciliX — Simplify Everything</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand:      #1A3C5E;
+      --brand-dark: #122D47;
+      --brand-mid:  #234E7A;
+      --white:      #FFFFFF;
+      --off-white:  #F7F9FC;
+      --text:       #1E293B;
+      --muted:      #64748B;
+      --border:     #E2E8F0;
+
+      /* Product colors */
+      --classpilot:  #2D9E6B;
+      --schoolpilot: #1A3C5E;
+      --shoppilot:   #E8821A;
+      --boost:       #E83A2D;
+
+      /* Service colors */
+      --brand-vis:  #D63384;
+      --video:      #F59E0B;
+      --automation: #4A5568;
+      --webdev:     #0AABBD;
+
+      --radius: 14px;
+      --shadow-sm: 0 1px 4px rgba(0,0,0,.06), 0 2px 12px rgba(0,0,0,.04);
+      --shadow-md: 0 4px 24px rgba(0,0,0,.10), 0 1px 4px rgba(0,0,0,.05);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,.16);
+      --transition: .25s cubic-bezier(.4,0,.2,1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Utilities ─── */
+    .container {
+      width: 100%;
+      max-width: 1180px;
+      margin-inline: auto;
+      padding-inline: 24px;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--brand);
+      background: rgba(26,60,94,.08);
+      padding: 4px 14px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 3.5vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.18;
+      color: var(--brand-dark);
+      margin-bottom: 14px;
+    }
+
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 560px;
+    }
+
+    .section-header {
+      margin-bottom: 52px;
+    }
+
+    /* ─── HEADER ─── */
+    #header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow var(--transition);
+    }
+
+    #header.scrolled {
+      box-shadow: 0 2px 20px rgba(26,60,94,.12);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      gap: 32px;
+    }
+
+    /* Logo */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .logo-mark {
+      width: 38px;
+      height: 38px;
+      background: var(--brand);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-mark::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--brand-mid) 0%, var(--brand-dark) 100%);
+    }
+
+    .logo-mark span {
+      position: relative;
+      font-size: 1rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -.03em;
+    }
+
+    .logo-text {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--brand);
+      letter-spacing: -.03em;
+    }
+
+    .logo-text sup {
+      font-size: .55em;
+      font-weight: 600;
+      vertical-align: super;
+      margin-left: 1px;
+    }
+
+    /* Nav */
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    nav a {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: color var(--transition), background var(--transition);
+    }
+
+    nav a:hover {
+      color: var(--brand);
+      background: rgba(26,60,94,.06);
+    }
+
+    .nav-cta {
+      background: var(--brand) !important;
+      color: #fff !important;
+      padding: 9px 20px !important;
+      border-radius: 10px !important;
+      margin-left: 8px;
+    }
+
+    .nav-cta:hover {
+      background: var(--brand-dark) !important;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      border: none;
+      background: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--brand);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      padding: 16px 24px 24px;
+      border-top: 1px solid var(--border);
+      background: rgba(255,255,255,.97);
+      gap: 4px;
+    }
+
+    .mobile-nav.open { display: flex; }
+
+    .mobile-nav a {
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 12px 16px;
+      border-radius: 10px;
+      transition: var(--transition);
+    }
+
+    .mobile-nav a:hover, .mobile-nav a.active {
+      color: var(--brand);
+      background: rgba(26,60,94,.06);
+    }
+
+    .mobile-nav .nav-cta {
+      background: var(--brand) !important;
+      color: #fff !important;
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      background: linear-gradient(160deg, var(--brand-dark) 0%, var(--brand) 55%, #1E5E8E 100%);
+      padding: 100px 0 110px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 80% 30%, rgba(255,255,255,.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 10% 80%, rgba(10,171,189,.15) 0%, transparent 60%);
+    }
+
+    /* Grid dots */
+    #hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,.12) 1px, transparent 1px);
+      background-size: 30px 30px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      color: rgba(255,255,255,.9);
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: #0AABBD;
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(10,171,189,.3);
+      animation: pulse 2.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(10,171,189,.3); }
+      50% { box-shadow: 0 0 0 6px rgba(10,171,189,.1); }
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+      font-weight: 900;
+      line-height: 1.08;
+      color: #fff;
+      letter-spacing: -.03em;
+      margin-bottom: 24px;
+    }
+
+    .hero-title .accent {
+      background: linear-gradient(90deg, #0AABBD, #2D9E6B);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,.75);
+      max-width: 520px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      color: var(--brand);
+      font-size: .95rem;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 12px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 4px 20px rgba(0,0,0,.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,.28);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.12);
+      color: #fff;
+      font-size: .95rem;
+      font-weight: 600;
+      padding: 14px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,.2);
+      cursor: pointer;
+      transition: background var(--transition), border-color var(--transition);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255,255,255,.2);
+      border-color: rgba(255,255,255,.4);
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.15);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 22px 28px;
+      text-align: center;
+      min-width: 150px;
+    }
+
+    .stat-number {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: .8rem;
+      color: rgba(255,255,255,.65);
+      font-weight: 500;
+    }
+
+    /* ─── PRODUCTS ─── */
+    #products {
+      padding: 100px 0;
+      background: var(--off-white);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      cursor: default;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--card-color);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition);
+    }
+
+    .product-card:hover::before { transform: scaleX(1); }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,.12);
+      border-color: transparent;
+    }
+
+    .product-card[data-color="classpilot"]  { --card-color: var(--classpilot); }
+    .product-card[data-color="schoolpilot"] { --card-color: var(--schoolpilot); }
+    .product-card[data-color="shoppilot"]   { --card-color: var(--shoppilot); }
+    .product-card[data-color="boost"]       { --card-color: var(--boost); }
+
+    .product-card:hover .product-icon-wrap {
+      background: var(--card-color);
+      border-color: var(--card-color);
+    }
+
+    .product-card:hover .product-icon-wrap svg { color: #fff; }
+    .product-card:hover .product-tag { background: var(--card-color); color: #fff; }
+
+    .product-icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
+      transition: background var(--transition), border-color var(--transition);
+    }
+
+    .product-icon-wrap svg {
+      width: 26px;
+      height: 26px;
+      color: var(--card-color);
+      transition: color var(--transition);
+    }
+
+    .product-tag {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 100px;
+      background: rgba(0,0,0,.06);
+      color: var(--card-color);
+      margin-bottom: 12px;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    .product-name {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .product-desc {
+      font-size: .92rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    .product-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .product-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .875rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .product-features li::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--card-color);
+      flex-shrink: 0;
+    }
+
+    .product-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .875rem;
+      font-weight: 700;
+      color: var(--card-color);
+      text-decoration: none;
+      margin-top: 28px;
+      transition: gap var(--transition);
+    }
+
+    .product-link:hover { gap: 10px; }
+
+    /* ─── SERVICES ─── */
+    #services {
+      padding: 100px 0;
+      background: #fff;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .service-card {
+      border-radius: var(--radius);
+      padding: 30px 26px;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      box-shadow: var(--shadow-sm);
+      cursor: default;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition), border-color var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card[data-color="brand-vis"]  { --svc-color: var(--brand-vis); }
+    .service-card[data-color="video"]      { --svc-color: var(--video); }
+    .service-card[data-color="automation"] { --svc-color: var(--automation); }
+    .service-card[data-color="webdev"]     { --svc-color: var(--webdev); }
+    .service-card[data-color="boost"]      { --svc-color: var(--boost); }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      background: var(--svc-color);
+      border-color: var(--svc-color);
+    }
+
+    .service-card:hover .service-icon-bg { background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.3); }
+    .service-card:hover .service-icon-bg svg { color: #fff; }
+    .service-card:hover .service-name { color: #fff; }
+    .service-card:hover .service-desc { color: rgba(255,255,255,.8); }
+    .service-card:hover .service-tag { background: rgba(255,255,255,.2); color: #fff; }
+
+    .service-icon-bg {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      transition: background var(--transition), border-color var(--transition);
+    }
+
+    .service-icon-bg svg {
+      width: 24px;
+      height: 24px;
+      color: var(--svc-color);
+      transition: color var(--transition);
+    }
+
+    .service-tag {
+      display: inline-block;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 100px;
+      background: rgba(0,0,0,.06);
+      color: var(--svc-color);
+      margin-bottom: 10px;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    .service-name {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+      transition: color var(--transition);
+    }
+
+    .service-desc {
+      font-size: .86rem;
+      color: var(--muted);
+      line-height: 1.6;
+      transition: color var(--transition);
+    }
+
+    /* ─── WHY ─── */
+    #why {
+      padding: 100px 0;
+      background: var(--off-white);
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .why-card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .why-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .why-number {
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--brand);
+      opacity: .12;
+      line-height: 1;
+      margin-bottom: 8px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .why-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(26,60,94,.08);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .why-icon svg { width: 24px; height: 24px; color: var(--brand); }
+
+    .why-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .why-desc {
+      font-size: .9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ─── FINAL CTA ─── */
+    #cta {
+      padding: 100px 0;
+      background: linear-gradient(150deg, var(--brand-dark) 0%, var(--brand) 60%, #1E6080 100%);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    #cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    .cta-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      margin-inline: auto;
+    }
+
+    .cta-label {
+      display: inline-block;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.7);
+      background: rgba(255,255,255,.1);
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+
+    .cta-title {
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.12;
+      margin-bottom: 18px;
+      letter-spacing: -.02em;
+    }
+
+    .cta-sub {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,.7);
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    .cta-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* ─── FOOTER ─── */
+    #footer {
+      background: var(--brand-dark);
+      padding: 60px 0 32px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .footer-brand .logo-text { color: #fff; }
+    .footer-brand .logo-mark { background: rgba(255,255,255,.1); }
+
+    .footer-tagline {
+      font-size: .9rem;
+      color: rgba(255,255,255,.5);
+      margin-top: 14px;
+      line-height: 1.65;
+      max-width: 260px;
+    }
+
+    .footer-col h4 {
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+      margin-bottom: 16px;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+    .footer-col ul a {
+      font-size: .9rem;
+      color: rgba(255,255,255,.55);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+
+    .footer-col ul a:hover { color: #fff; }
+
+    .footer-bottom {
+      padding-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-copy {
+      font-size: .85rem;
+      color: rgba(255,255,255,.35);
+    }
+
+    .footer-legal {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-legal a {
+      font-size: .82rem;
+      color: rgba(255,255,255,.35);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+
+    .footer-legal a:hover { color: rgba(255,255,255,.7); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; }
+    }
+
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .hamburger { display: flex; }
+
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-stats { flex-direction: row; flex-wrap: wrap; }
+      .stat-card { flex: 1; min-width: 120px; }
+
+      .products-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+
+      #hero { padding: 64px 0 72px; }
+      #products, #services, #why, #cta { padding: 72px 0; }
+    }
+
+    @media (max-width: 560px) {
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+
+    /* ─── VIEWS ─── */
+    .fx-view { display: none; }
+
+    .view-back-bar {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      background: var(--white);
+      position: sticky;
+      top: 72px;
+      z-index: 90;
+    }
+
+    .view-back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .875rem;
+      font-weight: 600;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px 2px;
+      font-family: inherit;
+      transition: color var(--transition), gap var(--transition);
+    }
+
+    .view-back-btn:hover { color: var(--brand); gap: 12px; }
+
+    .view-hero {
+      padding: 72px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .view-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 70% at 85% 20%, rgba(255,255,255,.08) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 10% 85%, rgba(0,0,0,.1) 0%, transparent 60%);
+    }
+
+    .view-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,.1) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+    }
+
+    .view-hero-inner { position: relative; z-index: 1; }
+
+    .view-hero-tag {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #fff;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.2);
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 22px;
+    }
+
+    .view-hero-title {
+      font-size: clamp(2rem, 4.5vw, 3.4rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.1;
+      letter-spacing: -.03em;
+      margin-bottom: 18px;
+    }
+
+    .view-hero-desc {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,.82);
+      max-width: 620px;
+      line-height: 1.75;
+      margin-bottom: 36px;
+    }
+
+    .view-features-section {
+      padding: 80px 0;
+      background: var(--off-white);
+    }
+
+    .view-features-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--brand-dark);
+      margin-bottom: 36px;
+    }
+
+    .view-features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .view-feat-card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .view-feat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--view-accent, var(--brand));
+    }
+
+    .view-feat-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .view-feat-icon svg { width: 22px; height: 22px; }
+
+    .view-feat-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .view-feat-desc {
+      font-size: .85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .view-delivery-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 20px 24px;
+      background: #fff;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--border);
+      margin-top: 32px;
+    }
+
+    .view-delivery-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .view-delivery-icon svg { width: 20px; height: 20px; }
+
+    .view-delivery-label {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+
+    .view-delivery-value {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .view-cta-section {
+      padding: 80px 0;
+      background: #fff;
+      text-align: center;
+    }
+
+    .view-cta-inner { max-width: 560px; margin-inline: auto; }
+
+    .view-cta-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--brand-dark);
+      margin-bottom: 12px;
+    }
+
+    .view-cta-sub {
+      font-size: .98rem;
+      color: var(--muted);
+      margin-bottom: 30px;
+      line-height: 1.7;
+    }
+
+    .btn-view-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-size: .95rem;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
+      box-shadow: 0 4px 20px rgba(0,0,0,.18);
+    }
+
+    .btn-view-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0,0,0,.25);
+      filter: brightness(1.08);
+    }
+
+    .view-also {
+      margin-top: 20px;
+      font-size: .85rem;
+      color: var(--muted);
+    }
+
+    .view-also-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: .85rem;
+      font-weight: 700;
+      padding: 0;
+      margin-left: 4px;
+      transition: opacity var(--transition);
+    }
+
+    .view-also-btn:hover { opacity: .75; }
+
+    /* Service link inside service cards */
+    .service-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .84rem;
+      font-weight: 700;
+      color: var(--svc-color);
+      text-decoration: none;
+      margin-top: 18px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: inherit;
+      transition: gap var(--transition), color var(--transition);
+    }
+
+    .service-card:hover .service-link { color: rgba(255,255,255,.92); }
+    .service-link:hover { gap: 10px; }
+
+    @media (max-width: 768px) {
+      .view-features-grid { grid-template-columns: 1fr; }
+      .view-hero { padding: 52px 0 60px; }
+      .view-features-section, .view-cta-section { padding: 56px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════ HEADER -->
+  <header id="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="#" class="logo" aria-label="FaciliX — Accueil">
+          <div class="logo-mark"><span>FX</span></div>
+          <span class="logo-text">FaciliX<sup>™</sup></span>
+        </a>
+
+        <nav aria-label="Navigation principale">
+          <a href="#products">Produits</a>
+          <a href="#services">Services</a>
+          <a href="#why">Pourquoi nous</a>
+          <a href="#contact">Contact</a>
+          <a href="#cta" class="nav-cta">Demander une démo</a>
+        </nav>
+
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="mobile-nav" id="mobileNav" aria-label="Navigation mobile">
+      <a href="#products">Produits</a>
+      <a href="#services">Services</a>
+      <a href="#why">Pourquoi nous</a>
+      <a href="#contact">Contact</a>
+      <a href="#cta" class="nav-cta">Demander une démo</a>
+    </nav>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════ HERO -->
+  <section id="hero" aria-labelledby="hero-heading">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-content">
+          <div class="hero-badge">Plateforme SaaS Caraïbe</div>
+
+          <h1 class="hero-title" id="hero-heading">
+            <span class="accent">Simplify</span><br />Everything.
+          </h1>
+
+          <p class="hero-sub">
+            FaciliX réunit tous les outils dont votre entreprise caribéenne a besoin — gestion scolaire, e-commerce, marketing et plus — dans un seul écosystème intégré.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#cta" class="btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Demander une démo
+            </a>
+            <a href="#products" class="btn-ghost">
+              Découvrir les produits
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-stats" role="list" aria-label="Chiffres clés">
+          <div class="stat-card" role="listitem">
+            <div class="stat-number">3+</div>
+            <div class="stat-label">Produits SaaS</div>
+          </div>
+          <div class="stat-card" role="listitem">
+            <div class="stat-number">4</div>
+            <div class="stat-label">Services métier</div>
+          </div>
+          <div class="stat-card" role="listitem">
+            <div class="stat-number">🇭🇹</div>
+            <div class="stat-label">Fait en Haïti</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ PRODUCTS -->
+  <section id="products" aria-labelledby="products-heading">
+    <div class="container">
+      <header class="section-header">
+        <div class="section-label">Produits SaaS</div>
+        <h2 class="section-title" id="products-heading">Des outils pensés<br />pour la Caraïbe</h2>
+        <p class="section-sub">Trois solutions SaaS verticales, conçues pour les réalités du terrain haïtien et caribéen.</p>
+      </header>
+
+      <div class="products-grid">
+
+        <!-- ClassPilot -->
+        <article class="product-card" data-color="classpilot" aria-label="ClassPilot">
+          <div class="product-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+          </div>
+          <span class="product-tag">E-Learning</span>
+          <h3 class="product-name">ClassPilot</h3>
+          <p class="product-desc">Plateforme e-learning multi-tenant pour écoles et universités — cours en ligne, sessions vidéo, gestion des rôles enseignant et étudiant.</p>
+          <ul class="product-features">
+            <li>Cours en ligne &amp; vidéo</li>
+            <li>Espace étudiant &amp; enseignant</li>
+            <li>Devoirs &amp; soumissions</li>
+            <li>PWA + Android</li>
+          </ul>
+          <a href="#" class="product-link" onclick="showView('classpilot'); return false;">
+            En savoir plus
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </article>
+
+        <!-- SchoolPilot -->
+        <article class="product-card" data-color="schoolpilot" aria-label="SchoolPilot">
+          <div class="product-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
+          </div>
+          <span class="product-tag">Gestion Scolaire</span>
+          <h3 class="product-name">SchoolPilot</h3>
+          <p class="product-desc">Gestion complète pour écoles privées — classes, élèves, bulletins, écolage, payroll et petite caisse en un seul outil.</p>
+          <ul class="product-features">
+            <li>Classes &amp; élèves</li>
+            <li>Bulletins &amp; notes</li>
+            <li>Écolage &amp; payroll</li>
+            <li>Rapports PDF</li>
+          </ul>
+          <a href="#" class="product-link" onclick="showView('schoolpilot'); return false;">
+            En savoir plus
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </article>
+
+        <!-- ShopPilot -->
+        <article class="product-card" data-color="shoppilot" aria-label="ShopPilot">
+          <div class="product-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+            </svg>
+          </div>
+          <span class="product-tag">Commerce</span>
+          <h3 class="product-name">ShopPilot</h3>
+          <p class="product-desc">Le moteur e-commerce adapté aux PME caribéennes, avec paiement mobile et gestion des stocks en temps réel.</p>
+          <ul class="product-features">
+            <li>Boutique en ligne personnalisée</li>
+            <li>Paiement mobile intégré</li>
+            <li>Gestion des stocks &amp; commandes</li>
+            <li>Rapports de ventes</li>
+          </ul>
+          <a href="#" class="product-link" onclick="showView('shoppilot'); return false;">
+            En savoir plus
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </article>
+
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ SERVICES -->
+  <section id="services" aria-labelledby="services-heading">
+    <div class="container">
+      <header class="section-header">
+        <div class="section-label">Services</div>
+        <h2 class="section-title" id="services-heading">L'expertise qui<br />propulse votre marque</h2>
+        <p class="section-sub">Des services professionnels pour bâtir, automatiser et faire rayonner votre entreprise.</p>
+      </header>
+
+      <div class="services-grid">
+
+        <!-- Brand Visuals -->
+        <article class="service-card" data-color="brand-vis" aria-label="Brand Visuals">
+          <div class="service-icon-bg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <span class="service-tag">Identité</span>
+          <h3 class="service-name">Brand Visuals</h3>
+          <p class="service-desc">Création d'identité visuelle complète : logo, charte graphique, supports de communication, et brand book.</p>
+          <button class="service-link" onclick="showView('brandvis')">
+            En savoir plus
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </article>
+
+        <!-- Video Production -->
+        <article class="service-card" data-color="video" aria-label="Video Production">
+          <div class="service-icon-bg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+            </svg>
+          </div>
+          <span class="service-tag">Contenu</span>
+          <h3 class="service-name">Video Production</h3>
+          <p class="service-desc">Tournage, montage et post-production pour vos publicités, présentations corporate et réseaux sociaux.</p>
+          <button class="service-link" onclick="showView('video')">
+            En savoir plus
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </article>
+
+        <!-- Business Automation -->
+        <article class="service-card" data-color="automation" aria-label="Business Automation">
+          <div class="service-icon-bg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 1.41 13.44M4.93 4.93A10 10 0 0 0 3.52 18.37"/>
+              <path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
+            </svg>
+          </div>
+          <span class="service-tag">Efficacité</span>
+          <h3 class="service-name">Business Automation</h3>
+          <p class="service-desc">Automatisation de vos processus métier : facturation, relances, workflows internes, intégrations API.</p>
+          <button class="service-link" onclick="showView('automation')">
+            En savoir plus
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </article>
+
+        <!-- Web Dev -->
+        <article class="service-card" data-color="webdev" aria-label="Web Dev">
+          <div class="service-icon-bg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+            </svg>
+          </div>
+          <span class="service-tag">Digital</span>
+          <h3 class="service-name">Web Dev</h3>
+          <p class="service-desc">Conception et développement de sites web et applications web sur-mesure, performants et optimisés SEO.</p>
+          <button class="service-link" onclick="showView('webdev')">
+            En savoir plus
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </article>
+
+        <!-- Boost -->
+        <article class="service-card" data-color="boost" aria-label="Boost">
+          <div class="service-icon-bg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+            </svg>
+          </div>
+          <span class="service-tag">Croissance</span>
+          <h3 class="service-name">Boost</h3>
+          <p class="service-desc">Stratégie digitale, campagnes ciblées et reporting mensuel — votre partenaire de croissance en ligne.</p>
+          <button class="service-link" onclick="showView('boost')">
+            En savoir plus
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ WHY FACILIX -->
+  <section id="why" aria-labelledby="why-heading">
+    <div class="container">
+      <header class="section-header">
+        <div class="section-label">Pourquoi FaciliX</div>
+        <h2 class="section-title" id="why-heading">Une entreprise caribéenne,<br />des solutions caribéennes</h2>
+        <p class="section-sub">Nous construisons pour les réalités du terrain, pas pour un marché générique.</p>
+      </header>
+
+      <div class="why-grid">
+
+        <article class="why-card">
+          <div class="why-number">01</div>
+          <div class="why-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <h3 class="why-title">Ancré dans la Caraïbe</h3>
+          <p class="why-desc">Fondé à Saint-Marc, Haïti, FaciliX comprend les contraintes locales : connectivité variable, paiements mobiles, réglementations régionales. Nos produits s'adaptent à votre contexte, pas l'inverse.</p>
+        </article>
+
+        <article class="why-card">
+          <div class="why-number">02</div>
+          <div class="why-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+            </svg>
+          </div>
+          <h3 class="why-title">Écosystème intégré</h3>
+          <p class="why-desc">Un compte, plusieurs outils. ClassPilot, ShopPilot et Boost partagent vos données en temps réel. Fini la fragmentation : gérez école, commerce et marketing depuis un tableau de bord unifié.</p>
+        </article>
+
+        <article class="why-card">
+          <div class="why-number">03</div>
+          <div class="why-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3 class="why-title">Fiable &amp; sécurisé</h3>
+          <p class="why-desc">Infrastructure cloud redondante, chiffrement des données, sauvegardes automatiques et support dédié. Vos données sont protégées, et notre équipe locale est disponible quand vous en avez besoin.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ FINAL CTA -->
+  <section id="cta" aria-labelledby="cta-heading">
+    <div class="container">
+      <div class="cta-inner">
+        <div class="cta-label">Prêt à commencer ?</div>
+        <h2 class="cta-title" id="cta-heading">Simplifiez votre gestion dès aujourd'hui</h2>
+        <p class="cta-sub">Demandez une démonstration gratuite et découvrez comment FaciliX peut transformer votre entreprise en 30 minutes.</p>
+        <div class="cta-actions">
+          <a href="mailto:contact@facilix.com" class="btn-primary" id="contact">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Demander une démo
+          </a>
+          <a href="tel:+50912345678" class="btn-ghost">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.4 2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.16 6.16l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Nous appeler
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ FOOTER -->
+  <footer id="footer" aria-label="Pied de page FaciliX">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="logo" aria-label="FaciliX — Accueil">
+            <div class="logo-mark"><span>FX</span></div>
+            <span class="logo-text">FaciliX<sup>™</sup></span>
+          </a>
+          <p class="footer-tagline">Simplifier la gestion des entreprises caribéennes. Basé à Saint-Marc, Haïti.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Produits</h4>
+          <ul>
+            <li><a href="#products">ClassPilot</a></li>
+            <li><a href="#products">ShopPilot</a></li>
+            <li><a href="#products">Boost</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#services">Brand Visuals</a></li>
+            <li><a href="#services">Video Production</a></li>
+            <li><a href="#services">Automation</a></li>
+            <li><a href="#services">Web Dev</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:contact@facilix.com">contact@facilix.com</a></li>
+            <li><a href="tel:+50912345678">+509 12 34 5678</a></li>
+            <li><a href="#cta">Demander une démo</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2025 FaciliX ™ — Fondé par Olivier Strid-Lord François. Tous droits réservés.</p>
+        <nav class="footer-legal" aria-label="Liens légaux">
+          <a href="#">Mentions légales</a>
+          <a href="#">Confidentialité</a>
+          <a href="#">CGU</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════════ VIEWS -->
+
+  <!-- VIEW: ClassPilot -->
+  <div id="view-classpilot" class="fx-view" aria-label="Vue ClassPilot">
+    <div class="view-back-bar">
+      <div class="container">
+        <button class="view-back-btn" onclick="showHome()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Retour à l'accueil
+        </button>
+      </div>
+    </div>
+    <div class="view-hero" style="background:linear-gradient(160deg,#1E6B48 0%,#2D9E6B 55%,#3AB87A 100%);">
+      <div class="container view-hero-inner">
+        <span class="view-hero-tag">Produit SaaS — E-Learning</span>
+        <h1 class="view-hero-title">Apprenez et enseignez,<br />sans limites</h1>
+        <p class="view-hero-desc">Plateforme e-learning multi-tenant pour écoles et universités — cours en ligne, sessions vidéo, gestion des rôles enseignant et étudiant.</p>
+        <a href="mailto:contact@facilix.com?subject=Démo ClassPilot" class="btn-view-cta" style="background:#fff;color:#2D9E6B;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Demander une démo ClassPilot
+        </a>
+      </div>
+    </div>
+    <div class="view-features-section">
+      <div class="container">
+        <h2 class="view-features-title">Ce que ClassPilot fait pour vous</h2>
+        <div class="view-features-grid">
+          <div class="view-feat-card" style="--view-accent:#2D9E6B;">
+            <div class="view-feat-icon" style="background:rgba(45,158,107,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2D9E6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <div class="view-feat-name">Gestion des cours</div>
+            <p class="view-feat-desc">Création et organisation de cours multi-médias : documents, quiz, modules et progressions pédagogiques.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#2D9E6B;">
+            <div class="view-feat-icon" style="background:rgba(45,158,107,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2D9E6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+            </div>
+            <div class="view-feat-name">Sessions vidéo intégrées</div>
+            <p class="view-feat-desc">Classes virtuelles en direct, enregistrements automatiques et bibliothèque vidéo accessible 24h/24.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#2D9E6B;">
+            <div class="view-feat-icon" style="background:rgba(45,158,107,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2D9E6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="view-feat-name">Espace étudiant</div>
+            <p class="view-feat-desc">Tableau de bord personnel : cours inscrits, progression, notes, devoirs et planning du semestre.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#2D9E6B;">
+            <div class="view-feat-icon" style="background:rgba(45,158,107,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2D9E6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="view-feat-name">Espace enseignant</div>
+            <p class="view-feat-desc">Gestion des classes, suivi des présences, création de contenus et communication directe avec les étudiants.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#2D9E6B;">
+            <div class="view-feat-icon" style="background:rgba(45,158,107,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2D9E6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </div>
+            <div class="view-feat-name">Devoirs et soumissions</div>
+            <p class="view-feat-desc">Dépôt de travaux, correction en ligne, notation et retour automatisé aux étudiants.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#2D9E6B;">
+            <div class="view-feat-icon" style="background:rgba(45,158,107,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2D9E6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            </div>
+            <div class="view-feat-name">Tableaux de bord par rôle</div>
+            <p class="view-feat-desc">Vues personnalisées pour admins, enseignants et étudiants — chacun voit ce dont il a besoin.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#2D9E6B;">
+            <div class="view-feat-icon" style="background:rgba(45,158,107,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2D9E6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            </div>
+            <div class="view-feat-name">PWA + Android</div>
+            <p class="view-feat-desc">Application installable sur mobile (PWA) et version Android native — apprendre partout, même hors ligne.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="view-cta-section">
+      <div class="container">
+        <div class="view-cta-inner">
+          <h2 class="view-cta-title">Prêt à lancer votre campus en ligne ?</h2>
+          <p class="view-cta-sub">Demandez une démonstration gratuite et découvrez ClassPilot en action avec votre équipe pédagogique.</p>
+          <a href="mailto:contact@facilix.com?subject=Démo ClassPilot" class="btn-view-cta" style="background:#2D9E6B;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Demander une démo ClassPilot
+          </a>
+          <p class="view-also">Besoin de gérer votre école (classes, écolage, payroll) ?
+            <button class="view-also-btn" onclick="showView('schoolpilot')" style="color:#1A3C5E;">Découvrir SchoolPilot →</button>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW: SchoolPilot -->
+  <div id="view-schoolpilot" class="fx-view" aria-label="Vue SchoolPilot">
+    <div class="view-back-bar">
+      <div class="container">
+        <button class="view-back-btn" onclick="showHome()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Retour à l'accueil
+        </button>
+      </div>
+    </div>
+    <div class="view-hero" style="background:linear-gradient(160deg,#0D2136 0%,#1A3C5E 55%,#234E7A 100%);">
+      <div class="container view-hero-inner">
+        <span class="view-hero-tag">Produit SaaS — Gestion Scolaire</span>
+        <h1 class="view-hero-title">Gérez votre école,<br />en un seul outil</h1>
+        <p class="view-hero-desc">Gestion complète pour écoles privées — classes, élèves, bulletins, écolage, payroll et petite caisse en un seul outil.</p>
+        <a href="mailto:contact@facilix.com?subject=Démo SchoolPilot" class="btn-view-cta" style="background:#fff;color:#1A3C5E;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Demander une démo SchoolPilot
+        </a>
+      </div>
+    </div>
+    <div class="view-features-section">
+      <div class="container">
+        <h2 class="view-features-title">Ce que SchoolPilot fait pour vous</h2>
+        <div class="view-features-grid">
+          <div class="view-feat-card" style="--view-accent:#1A3C5E;">
+            <div class="view-feat-icon" style="background:rgba(26,60,94,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#1A3C5E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            </div>
+            <div class="view-feat-name">Classes</div>
+            <p class="view-feat-desc">Création et gestion des classes par niveau, avec affectation des enseignants et emplois du temps.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#1A3C5E;">
+            <div class="view-feat-icon" style="background:rgba(26,60,94,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#1A3C5E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="view-feat-name">Élèves</div>
+            <p class="view-feat-desc">Dossiers complets par élève : inscriptions, informations parents, historique scolaire et présences.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#1A3C5E;">
+            <div class="view-feat-icon" style="background:rgba(26,60,94,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#1A3C5E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div class="view-feat-name">Bulletins</div>
+            <p class="view-feat-desc">Génération automatique de bulletins scolaires PDF, personnalisables selon la charte de l'établissement.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#1A3C5E;">
+            <div class="view-feat-icon" style="background:rgba(26,60,94,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#1A3C5E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="view-feat-name">Écolage</div>
+            <p class="view-feat-desc">Suivi des frais scolaires, enregistrement des paiements, relances automatiques et reçus imprimables.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#1A3C5E;">
+            <div class="view-feat-icon" style="background:rgba(26,60,94,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#1A3C5E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </div>
+            <div class="view-feat-name">Petite Caisse</div>
+            <p class="view-feat-desc">Gestion des entrées et sorties de caisse quotidiennes avec rapports de clôture et reçus.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#1A3C5E;">
+            <div class="view-feat-icon" style="background:rgba(26,60,94,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#1A3C5E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            </div>
+            <div class="view-feat-name">Payroll</div>
+            <p class="view-feat-desc">Calcul et gestion des salaires des enseignants et du personnel administratif avec bulletins de paie.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#1A3C5E;">
+            <div class="view-feat-icon" style="background:rgba(26,60,94,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#1A3C5E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            </div>
+            <div class="view-feat-name">Rapports PDF</div>
+            <p class="view-feat-desc">Rapports complets pour la direction : finances, effectifs, résultats académiques — exportables en PDF.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="view-cta-section">
+      <div class="container">
+        <div class="view-cta-inner">
+          <h2 class="view-cta-title">Prêt à tout gérer depuis un seul outil ?</h2>
+          <p class="view-cta-sub">SchoolPilot s'adapte à votre établissement, quelle que soit sa taille. Demandez une démo gratuite.</p>
+          <a href="mailto:contact@facilix.com?subject=Démo SchoolPilot" class="btn-view-cta" style="background:#1A3C5E;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Demander une démo SchoolPilot
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW: ShopPilot -->
+  <div id="view-shoppilot" class="fx-view" aria-label="Vue ShopPilot">
+    <div class="view-back-bar">
+      <div class="container">
+        <button class="view-back-btn" onclick="showHome()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Retour à l'accueil
+        </button>
+      </div>
+    </div>
+    <div class="view-hero" style="background:linear-gradient(160deg,#7C2D12 0%,#E8821A 55%,#F59E0B 100%);">
+      <div class="container view-hero-inner">
+        <span class="view-hero-tag">Produit SaaS — Commerce</span>
+        <h1 class="view-hero-title">Votre commerce,<br />sous contrôle</h1>
+        <p class="view-hero-desc">Point de vente et gestion d'inventaire pensés pour les commerçants. Interface rapide, multi-langues, fonctionne même avec une connexion limitée.</p>
+        <a href="mailto:contact@facilix.com?subject=Démo ShopPilot" class="btn-view-cta" style="background:#fff;color:#E8821A;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Demander une démo ShopPilot
+        </a>
+      </div>
+    </div>
+    <div class="view-features-section">
+      <div class="container">
+        <h2 class="view-features-title">Ce que ShopPilot fait pour vous</h2>
+        <div class="view-features-grid">
+          <div class="view-feat-card" style="--view-accent:#E8821A;">
+            <div class="view-feat-icon" style="background:rgba(232,130,26,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E8821A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            </div>
+            <div class="view-feat-name">Point de vente (POS)</div>
+            <p class="view-feat-desc">Interface caisse ultra-rapide, gestion des reçus et encaissements cash ou mobile money.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#E8821A;">
+            <div class="view-feat-icon" style="background:rgba(232,130,26,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E8821A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            </div>
+            <div class="view-feat-name">Gestion inventaire</div>
+            <p class="view-feat-desc">Stock en temps réel, catégories produits, codes-barres et valorisation automatique.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#E8821A;">
+            <div class="view-feat-icon" style="background:rgba(232,130,26,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E8821A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            </div>
+            <div class="view-feat-name">Suivi fournisseurs</div>
+            <p class="view-feat-desc">Gestion des commandes fournisseurs, réceptions et historique complet des achats.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#E8821A;">
+            <div class="view-feat-icon" style="background:rgba(232,130,26,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E8821A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            </div>
+            <div class="view-feat-name">Rapports de ventes</div>
+            <p class="view-feat-desc">Analyse journalière, hebdomadaire et mensuelle : ventes, marges et meilleures ventes.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#E8821A;">
+            <div class="view-feat-icon" style="background:rgba(232,130,26,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E8821A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div class="view-feat-name">Multi-langues (FR/EN/HT/ES/NL)</div>
+            <p class="view-feat-desc">Interface disponible en Français, Anglais, Créole haïtien, Espagnol et Néerlandais.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#E8821A;">
+            <div class="view-feat-icon" style="background:rgba(232,130,26,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E8821A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div class="view-feat-name">Alertes stock</div>
+            <p class="view-feat-desc">Alertes automatiques quand un produit atteint son seuil minimum de stock.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="view-cta-section">
+      <div class="container">
+        <div class="view-cta-inner">
+          <h2 class="view-cta-title">Prêt à mieux gérer votre commerce ?</h2>
+          <p class="view-cta-sub">Essayez ShopPilot gratuitement pendant 14 jours, sans carte bancaire requise.</p>
+          <a href="mailto:contact@facilix.com?subject=Démo ShopPilot" class="btn-view-cta" style="background:#E8821A;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Demander une démo ShopPilot
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW: Boost -->
+  <div id="view-boost" class="fx-view" aria-label="Vue Boost">
+    <div class="view-back-bar">
+      <div class="container">
+        <button class="view-back-btn" onclick="showHome()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Retour à l'accueil
+        </button>
+      </div>
+    </div>
+    <div class="view-hero" style="background:linear-gradient(160deg,#7F1D1D 0%,#E83A2D 55%,#EF4444 100%);">
+      <div class="container view-hero-inner">
+        <span class="view-hero-tag">Service — Croissance digitale</span>
+        <h1 class="view-hero-title">Amplifiez votre<br />visibilité digitale</h1>
+        <p class="view-hero-desc">Boost est votre partenaire de croissance : audit, stratégie de contenu, campagnes ciblées et reporting mensuel pour transformer votre présence en ligne en résultats concrets.</p>
+        <a href="mailto:contact@facilix.com?subject=Demande de devis Boost" class="btn-view-cta" style="background:#fff;color:#E83A2D;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Demander un devis
+        </a>
+      </div>
+    </div>
+    <div class="view-features-section">
+      <div class="container">
+        <h2 class="view-features-title">Ce qui est inclus</h2>
+        <div class="view-features-grid">
+          <div class="view-feat-card" style="--view-accent:#E83A2D;">
+            <div class="view-feat-icon" style="background:rgba(232,58,45,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E83A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div class="view-feat-name">Audit visibilité digitale</div>
+            <p class="view-feat-desc">Analyse complète de votre présence en ligne : réseaux sociaux, SEO, site web et réputation.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#E83A2D;">
+            <div class="view-feat-icon" style="background:rgba(232,58,45,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E83A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </div>
+            <div class="view-feat-name">Stratégie de contenu</div>
+            <p class="view-feat-desc">Plan éditorial mensuel adapté à votre marque, votre audience et vos objectifs business.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#E83A2D;">
+            <div class="view-feat-icon" style="background:rgba(232,58,45,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E83A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <div class="view-feat-name">Campagnes ciblées</div>
+            <p class="view-feat-desc">Publicités sur Meta, Google et TikTok ciblées précisément sur votre marché local.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#E83A2D;">
+            <div class="view-feat-icon" style="background:rgba(232,58,45,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E83A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+            </div>
+            <div class="view-feat-name">Suivi analytics</div>
+            <p class="view-feat-desc">Tableaux de bord en temps réel pour mesurer portée, engagement et conversions.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#E83A2D;">
+            <div class="view-feat-icon" style="background:rgba(232,58,45,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E83A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div class="view-feat-name">Rapport mensuel</div>
+            <p class="view-feat-desc">Compte rendu détaillé chaque mois : résultats, ROI et recommandations pour le mois suivant.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#E83A2D;background:rgba(232,58,45,.04);border-style:dashed;">
+            <div class="view-feat-name" style="margin-bottom:8px;">Abonnement mensuel</div>
+            <p class="view-feat-desc">Service continu — Boost évolue avec votre marque mois après mois, sans engagement long terme.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="view-cta-section">
+      <div class="container">
+        <div class="view-cta-inner">
+          <h2 class="view-cta-title">Prêt à booster votre marque ?</h2>
+          <p class="view-cta-sub">Abonnement mensuel, sans engagement. Obtenez votre devis personnalisé en 24h.</p>
+          <a href="mailto:contact@facilix.com?subject=Demande de devis Boost" class="btn-view-cta" style="background:#E83A2D;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Demander un devis
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW: Brand Visuals -->
+  <div id="view-brandvis" class="fx-view" aria-label="Vue Brand Visuals">
+    <div class="view-back-bar">
+      <div class="container">
+        <button class="view-back-btn" onclick="showHome()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Retour à l'accueil
+        </button>
+      </div>
+    </div>
+    <div class="view-hero" style="background:linear-gradient(160deg,#6B1034 0%,#D63384 55%,#EC4899 100%);">
+      <div class="container view-hero-inner">
+        <span class="view-hero-tag">Service — Identité visuelle</span>
+        <h1 class="view-hero-title">Une marque qui<br />laisse une impression</h1>
+        <p class="view-hero-desc">Nous créons votre identité visuelle de A à Z : logo, charte graphique, supports de communication et brand book — tout ce dont votre marque a besoin pour briller.</p>
+        <a href="mailto:contact@facilix.com?subject=Demande de devis Brand Visuals" class="btn-view-cta" style="background:#fff;color:#D63384;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Demander un devis
+        </a>
+      </div>
+    </div>
+    <div class="view-features-section">
+      <div class="container">
+        <h2 class="view-features-title">Ce qui est inclus</h2>
+        <div class="view-features-grid">
+          <div class="view-feat-card" style="--view-accent:#D63384;">
+            <div class="view-feat-icon" style="background:rgba(214,51,132,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#D63384" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="11" cy="11" r="2"/></svg>
+            </div>
+            <div class="view-feat-name">Logo principal + variantes</div>
+            <p class="view-feat-desc">Logo original et toutes ses déclinaisons : horizontal, vertical, icône, fond clair et sombre.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#D63384;">
+            <div class="view-feat-icon" style="background:rgba(214,51,132,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#D63384" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
+            </div>
+            <div class="view-feat-name">Charte couleurs</div>
+            <p class="view-feat-desc">Palette principale et secondaire avec codes HEX, RGB et CMYK prêts pour print et digital.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#D63384;">
+            <div class="view-feat-icon" style="background:rgba(214,51,132,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#D63384" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+            </div>
+            <div class="view-feat-name">Typographie</div>
+            <p class="view-feat-desc">Sélection et configuration des polices de votre marque — titres, corps de texte, accent.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#D63384;">
+            <div class="view-feat-icon" style="background:rgba(214,51,132,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#D63384" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            </div>
+            <div class="view-feat-name">Kit de marque complet</div>
+            <p class="view-feat-desc">Tous les fichiers sources (AI, PDF, PNG, SVG) organisés pour print et digital.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#D63384;">
+            <div class="view-feat-icon" style="background:rgba(214,51,132,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#D63384" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <div class="view-feat-name">Guide d'utilisation</div>
+            <p class="view-feat-desc">Document PDF expliquant comment bien (et mal) utiliser votre identité visuelle au quotidien.</p>
+          </div>
+        </div>
+        <div class="view-delivery-row">
+          <div class="view-delivery-icon" style="background:rgba(214,51,132,.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#D63384" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div class="view-delivery-label">Délai de livraison</div>
+            <div class="view-delivery-value">5 à 10 jours ouvrables</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="view-cta-section">
+      <div class="container">
+        <div class="view-cta-inner">
+          <h2 class="view-cta-title">Créons votre identité ensemble</h2>
+          <p class="view-cta-sub">Obtenez votre devis en 24h. Brief, moodboard et première proposition inclus.</p>
+          <a href="mailto:contact@facilix.com?subject=Demande de devis Brand Visuals" class="btn-view-cta" style="background:#D63384;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Demander un devis
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW: Video Production -->
+  <div id="view-video" class="fx-view" aria-label="Vue Video Production">
+    <div class="view-back-bar">
+      <div class="container">
+        <button class="view-back-btn" onclick="showHome()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Retour à l'accueil
+        </button>
+      </div>
+    </div>
+    <div class="view-hero" style="background:linear-gradient(160deg,#451A03 0%,#B45309 55%,#F59E0B 100%);">
+      <div class="container view-hero-inner">
+        <span class="view-hero-tag">Service — Production vidéo</span>
+        <h1 class="view-hero-title">Des vidéos qui<br />parlent pour vous</h1>
+        <p class="view-hero-desc">De la conception au rendu final, nous gérons tout : script, tournage, montage et diffusion multi-formats. Des contenus qui captivent, convertissent et durent.</p>
+        <a href="mailto:contact@facilix.com?subject=Demande de devis Video Production" class="btn-view-cta" style="background:#fff;color:#B45309;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Demander un devis
+        </a>
+      </div>
+    </div>
+    <div class="view-features-section">
+      <div class="container">
+        <h2 class="view-features-title">Ce qui est inclus</h2>
+        <div class="view-features-grid">
+          <div class="view-feat-card" style="--view-accent:#F59E0B;">
+            <div class="view-feat-icon" style="background:rgba(245,158,11,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+            </div>
+            <div class="view-feat-name">Script et storyboard</div>
+            <p class="view-feat-desc">Écriture du script et mise en scène visuelle avant le tournage pour un résultat maîtrisé.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#F59E0B;">
+            <div class="view-feat-icon" style="background:rgba(245,158,11,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            </div>
+            <div class="view-feat-name">Tournage ou génération IA</div>
+            <p class="view-feat-desc">Tournage sur site ou génération vidéo par IA selon vos besoins, budget et délais.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#F59E0B;">
+            <div class="view-feat-icon" style="background:rgba(245,158,11,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+            </div>
+            <div class="view-feat-name">Montage professionnel</div>
+            <p class="view-feat-desc">Montage, étalonnage colorimétrique, habillage graphique et musique adaptée.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#F59E0B;">
+            <div class="view-feat-icon" style="background:rgba(245,158,11,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div class="view-feat-name">Sous-titres</div>
+            <p class="view-feat-desc">Ajout de sous-titres en français, créole ou anglais pour maximiser la portée du contenu.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#F59E0B;">
+            <div class="view-feat-icon" style="background:rgba(245,158,11,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            </div>
+            <div class="view-feat-name">Formats livrés (Reels, YouTube, pub)</div>
+            <p class="view-feat-desc">Un tournage, tous les formats : Reels Instagram, YouTube, vertical et publicité.</p>
+          </div>
+        </div>
+        <div class="view-delivery-row">
+          <div class="view-delivery-icon" style="background:rgba(245,158,11,.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div class="view-delivery-label">Délai de livraison</div>
+            <div class="view-delivery-value">7 à 14 jours ouvrables</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="view-cta-section">
+      <div class="container">
+        <div class="view-cta-inner">
+          <h2 class="view-cta-title">Votre prochaine vidéo vous attend</h2>
+          <p class="view-cta-sub">Obtenez votre devis en 24h avec une première estimation du concept incluse.</p>
+          <a href="mailto:contact@facilix.com?subject=Demande de devis Video Production" class="btn-view-cta" style="background:#F59E0B;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Demander un devis
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW: Business Automation -->
+  <div id="view-automation" class="fx-view" aria-label="Vue Business Automation">
+    <div class="view-back-bar">
+      <div class="container">
+        <button class="view-back-btn" onclick="showHome()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Retour à l'accueil
+        </button>
+      </div>
+    </div>
+    <div class="view-hero" style="background:linear-gradient(160deg,#0F172A 0%,#4A5568 55%,#64748B 100%);">
+      <div class="container view-hero-inner">
+        <span class="view-hero-tag">Service — Automatisation métier</span>
+        <h1 class="view-hero-title">Travaillez moins,<br />accomplissez plus</h1>
+        <p class="view-hero-desc">Nous automatisons vos processus métier répétitifs : facturation, relances, workflows, intégrations — pour que votre équipe se concentre sur ce qui compte vraiment.</p>
+        <a href="mailto:contact@facilix.com?subject=Demande de devis Business Automation" class="btn-view-cta" style="background:#fff;color:#4A5568;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Demander un devis
+        </a>
+      </div>
+    </div>
+    <div class="view-features-section">
+      <div class="container">
+        <h2 class="view-features-title">Ce qui est inclus</h2>
+        <div class="view-features-grid">
+          <div class="view-feat-card" style="--view-accent:#4A5568;">
+            <div class="view-feat-icon" style="background:rgba(74,85,104,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+            </div>
+            <div class="view-feat-name">Audit des processus</div>
+            <p class="view-feat-desc">Cartographie complète de vos workflows actuels pour identifier les tâches automatisables.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#4A5568;">
+            <div class="view-feat-icon" style="background:rgba(74,85,104,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+            </div>
+            <div class="view-feat-name">Conception des workflows</div>
+            <p class="view-feat-desc">Design des flux automatisés : déclencheurs, conditions, actions et gestion des exceptions.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#4A5568;">
+            <div class="view-feat-icon" style="background:rgba(74,85,104,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            </div>
+            <div class="view-feat-name">Intégration outils (Zapier, Make)</div>
+            <p class="view-feat-desc">Connexion de vos applications via Zapier, Make (Integromat), API REST et webhooks.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#4A5568;">
+            <div class="view-feat-icon" style="background:rgba(74,85,104,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="view-feat-name">Tests et validation</div>
+            <p class="view-feat-desc">Phase de tests complète avant mise en production pour garantir fiabilité et robustesse.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#4A5568;">
+            <div class="view-feat-icon" style="background:rgba(74,85,104,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="view-feat-name">Formation équipe</div>
+            <p class="view-feat-desc">Session de formation pour que votre équipe maîtrise et maintienne les automatisations livrées.</p>
+          </div>
+        </div>
+        <div class="view-delivery-row">
+          <div class="view-delivery-icon" style="background:rgba(74,85,104,.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div class="view-delivery-label">Délai de livraison</div>
+            <div class="view-delivery-value">10 à 21 jours ouvrables</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="view-cta-section">
+      <div class="container">
+        <div class="view-cta-inner">
+          <h2 class="view-cta-title">Prêt à automatiser ?</h2>
+          <p class="view-cta-sub">Décrivez-nous vos processus et obtenez une proposition d'automatisation sur mesure.</p>
+          <a href="mailto:contact@facilix.com?subject=Demande de devis Business Automation" class="btn-view-cta" style="background:#4A5568;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Demander un devis
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW: Web Dev -->
+  <div id="view-webdev" class="fx-view" aria-label="Vue Web Development">
+    <div class="view-back-bar">
+      <div class="container">
+        <button class="view-back-btn" onclick="showHome()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Retour à l'accueil
+        </button>
+      </div>
+    </div>
+    <div class="view-hero" style="background:linear-gradient(160deg,#0C4A6E 0%,#0AABBD 55%,#06B6D4 100%);">
+      <div class="container view-hero-inner">
+        <span class="view-hero-tag">Service — Développement web</span>
+        <h1 class="view-hero-title">Votre site, votre<br />vitrine digitale</h1>
+        <p class="view-hero-desc">Nous concevons et développons des sites web et applications sur mesure — performants, optimisés SEO et conçus pour convertir vos visiteurs en clients.</p>
+        <a href="mailto:contact@facilix.com?subject=Demande de devis Web Dev" class="btn-view-cta" style="background:#fff;color:#0AABBD;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Demander un devis
+        </a>
+      </div>
+    </div>
+    <div class="view-features-section">
+      <div class="container">
+        <h2 class="view-features-title">Ce qui est inclus</h2>
+        <div class="view-features-grid">
+          <div class="view-feat-card" style="--view-accent:#0AABBD;">
+            <div class="view-feat-icon" style="background:rgba(10,171,189,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0AABBD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div class="view-feat-name">Design personnalisé</div>
+            <p class="view-feat-desc">Maquettes Figma sur mesure alignées sur votre identité visuelle, validées avant développement.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#0AABBD;">
+            <div class="view-feat-icon" style="background:rgba(10,171,189,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0AABBD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <div class="view-feat-name">Développement React</div>
+            <p class="view-feat-desc">Application web moderne avec React, performances optimisées et architecture scalable.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#0AABBD;">
+            <div class="view-feat-icon" style="background:rgba(10,171,189,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0AABBD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            </div>
+            <div class="view-feat-name">Domaine et hébergement</div>
+            <p class="view-feat-desc">Configuration du domaine, hébergement sécurisé SSL inclus et mise en ligne complète.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#0AABBD;">
+            <div class="view-feat-icon" style="background:rgba(10,171,189,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0AABBD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <div class="view-feat-name">Formation à la mise à jour</div>
+            <p class="view-feat-desc">Formation pratique pour mettre à jour votre contenu en autonomie, sans développeur.</p>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#0AABBD;">
+            <div class="view-feat-icon" style="background:rgba(10,171,189,.1);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0AABBD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+            </div>
+            <div class="view-feat-name">Support 30 jours</div>
+            <p class="view-feat-desc">30 jours de support technique après la mise en ligne pour corrections et ajustements.</p>
+          </div>
+        </div>
+        <div class="view-delivery-row">
+          <div class="view-delivery-icon" style="background:rgba(10,171,189,.1);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0AABBD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div class="view-delivery-label">Délai de livraison</div>
+            <div class="view-delivery-value">14 à 21 jours ouvrables</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="view-cta-section">
+      <div class="container">
+        <div class="view-cta-inner">
+          <h2 class="view-cta-title">Lancez votre projet web</h2>
+          <p class="view-cta-sub">Obtenez votre devis en 24h avec un premier wireframe de votre site inclus gratuitement.</p>
+          <a href="mailto:contact@facilix.com?subject=Demande de devis Web Dev" class="btn-view-cta" style="background:#0AABBD;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Demander un devis
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ JS -->
+  <script>
+    // ─── Header scroll shadow ───
+    const header = document.getElementById('header');
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 10);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // ─── Mobile nav toggle ───
+    const btn = document.getElementById('hamburgerBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    btn.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      btn.setAttribute('aria-expanded', isOpen);
+    });
+
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNav.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // ─── Nav active highlight ───
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(a => a.classList.remove('active'));
+          const active = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    sections.forEach(s => observer.observe(s));
+
+    // ─── View system ───
+    const HOME_SECTIONS = ['hero', 'products', 'services', 'why', 'cta'];
+
+    function showView(id) {
+      HOME_SECTIONS.forEach(s => { document.getElementById(s).style.display = 'none'; });
+      document.querySelectorAll('.fx-view').forEach(v => { v.style.display = 'none'; });
+      const view = document.getElementById('view-' + id);
+      if (view) { view.style.display = 'block'; }
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    function showHome() {
+      HOME_SECTIONS.forEach(s => { document.getElementById(s).style.display = ''; });
+      document.querySelectorAll('.fx-view').forEach(v => { v.style.display = 'none'; });
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  </script>
+</body>
+</html>
