@@ -7,6 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     /* ─── Reset & Base ─── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1152,6 +1154,151 @@
       .view-hero { padding: 52px 0 60px; }
       .view-features-section, .view-cta-section { padding: 56px 0; }
     }
+
+    /* ─── CONTACT FORM VIEW ─── */
+    .contact-form-section {
+      padding: 80px 0;
+      background: var(--off-white);
+      min-height: calc(100vh - 72px);
+    }
+
+    .contact-form-inner {
+      max-width: 640px;
+      margin-inline: auto;
+      background: #fff;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-md);
+      padding: 48px;
+    }
+
+    .contact-form-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--brand-dark);
+      margin-bottom: 8px;
+    }
+
+    .contact-form-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 36px;
+      line-height: 1.65;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      font-family: inherit;
+      font-size: .95rem;
+      color: var(--text);
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 130px;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(26,60,94,.1);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .btn-contact-submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: var(--brand);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 15px 28px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 4px 20px rgba(26,60,94,.25);
+      margin-top: 8px;
+    }
+
+    .btn-contact-submit:hover {
+      background: var(--brand-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(26,60,94,.32);
+    }
+
+    .btn-contact-submit:disabled {
+      opacity: .65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .contact-msg {
+      display: none;
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: .9rem;
+      font-weight: 600;
+      margin-top: 16px;
+      text-align: center;
+    }
+
+    .contact-msg.success {
+      background: rgba(45,158,107,.1);
+      color: #1E6B48;
+      border: 1px solid rgba(45,158,107,.25);
+    }
+
+    .contact-msg.error {
+      background: rgba(232,58,45,.08);
+      color: #7F1D1D;
+      border: 1px solid rgba(232,58,45,.2);
+    }
+
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+      .contact-form-inner { padding: 28px 20px; }
+    }
   </style>
 </head>
 <body>
@@ -1170,7 +1317,7 @@
           <a href="#services">Services</a>
           <a href="#why">Pourquoi nous</a>
           <a href="#contact">Contact</a>
-          <a href="#cta" class="nav-cta">Demander une démo</a>
+          <a href="#" class="nav-cta" onclick="showView('contact'); return false;">Demander une démo</a>
         </nav>
 
         <button class="hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">
@@ -1184,7 +1331,7 @@
       <a href="#services">Services</a>
       <a href="#why">Pourquoi nous</a>
       <a href="#contact">Contact</a>
-      <a href="#cta" class="nav-cta">Demander une démo</a>
+      <a href="#" class="nav-cta" onclick="showView('contact'); return false;">Demander une démo</a>
     </nav>
   </header>
 
@@ -1204,7 +1351,7 @@
           </p>
 
           <div class="hero-actions">
-            <a href="#cta" class="btn-primary">
+            <a href="#" class="btn-primary" onclick="showView('contact'); return false;">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               Demander une démo
             </a>
@@ -1467,7 +1614,7 @@
         <h2 class="cta-title" id="cta-heading">Simplifiez votre gestion dès aujourd'hui</h2>
         <p class="cta-sub">Demandez une démonstration gratuite et découvrez comment FaciliX peut transformer votre entreprise en 30 minutes.</p>
         <div class="cta-actions">
-          <a href="mailto:contact@facilix.com" class="btn-primary" id="contact">
+          <a href="#" class="btn-primary" id="contact" onclick="showView('contact'); return false;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Demander une démo
           </a>
@@ -1549,7 +1696,7 @@
         <span class="view-hero-tag">Produit SaaS — E-Learning</span>
         <h1 class="view-hero-title">Apprenez et enseignez,<br />sans limites</h1>
         <p class="view-hero-desc">Plateforme e-learning multi-tenant pour écoles et universités — cours en ligne, sessions vidéo, gestion des rôles enseignant et étudiant.</p>
-        <a href="mailto:contact@facilix.com?subject=Démo ClassPilot" class="btn-view-cta" style="background:#fff;color:#2D9E6B;">
+        <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#fff;color:#2D9E6B;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           Demander une démo ClassPilot
         </a>
@@ -1616,7 +1763,7 @@
         <div class="view-cta-inner">
           <h2 class="view-cta-title">Prêt à lancer votre campus en ligne ?</h2>
           <p class="view-cta-sub">Demandez une démonstration gratuite et découvrez ClassPilot en action avec votre équipe pédagogique.</p>
-          <a href="mailto:contact@facilix.com?subject=Démo ClassPilot" class="btn-view-cta" style="background:#2D9E6B;">
+          <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#2D9E6B;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Demander une démo ClassPilot
           </a>
@@ -1643,7 +1790,7 @@
         <span class="view-hero-tag">Produit SaaS — Gestion Scolaire</span>
         <h1 class="view-hero-title">Gérez votre école,<br />en un seul outil</h1>
         <p class="view-hero-desc">Gestion complète pour écoles privées — classes, élèves, bulletins, écolage, payroll et petite caisse en un seul outil.</p>
-        <a href="mailto:contact@facilix.com?subject=Démo SchoolPilot" class="btn-view-cta" style="background:#fff;color:#1A3C5E;">
+        <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#fff;color:#1A3C5E;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           Demander une démo SchoolPilot
         </a>
@@ -1710,7 +1857,7 @@
         <div class="view-cta-inner">
           <h2 class="view-cta-title">Prêt à tout gérer depuis un seul outil ?</h2>
           <p class="view-cta-sub">SchoolPilot s'adapte à votre établissement, quelle que soit sa taille. Demandez une démo gratuite.</p>
-          <a href="mailto:contact@facilix.com?subject=Démo SchoolPilot" class="btn-view-cta" style="background:#1A3C5E;">
+          <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#1A3C5E;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Demander une démo SchoolPilot
           </a>
@@ -1734,7 +1881,7 @@
         <span class="view-hero-tag">Produit SaaS — Commerce</span>
         <h1 class="view-hero-title">Votre commerce,<br />sous contrôle</h1>
         <p class="view-hero-desc">Point de vente et gestion d'inventaire pensés pour les commerçants. Interface rapide, multi-langues, fonctionne même avec une connexion limitée.</p>
-        <a href="mailto:contact@facilix.com?subject=Démo ShopPilot" class="btn-view-cta" style="background:#fff;color:#E8821A;">
+        <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#fff;color:#E8821A;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           Demander une démo ShopPilot
         </a>
@@ -1794,7 +1941,7 @@
         <div class="view-cta-inner">
           <h2 class="view-cta-title">Prêt à mieux gérer votre commerce ?</h2>
           <p class="view-cta-sub">Essayez ShopPilot gratuitement pendant 14 jours, sans carte bancaire requise.</p>
-          <a href="mailto:contact@facilix.com?subject=Démo ShopPilot" class="btn-view-cta" style="background:#E8821A;">
+          <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#E8821A;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Demander une démo ShopPilot
           </a>
@@ -1818,7 +1965,7 @@
         <span class="view-hero-tag">Service — Croissance digitale</span>
         <h1 class="view-hero-title">Amplifiez votre<br />visibilité digitale</h1>
         <p class="view-hero-desc">Boost est votre partenaire de croissance : audit, stratégie de contenu, campagnes ciblées et reporting mensuel pour transformer votre présence en ligne en résultats concrets.</p>
-        <a href="mailto:contact@facilix.com?subject=Demande de devis Boost" class="btn-view-cta" style="background:#fff;color:#E83A2D;">
+        <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#fff;color:#E83A2D;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           Demander un devis
         </a>
@@ -1875,7 +2022,7 @@
         <div class="view-cta-inner">
           <h2 class="view-cta-title">Prêt à booster votre marque ?</h2>
           <p class="view-cta-sub">Abonnement mensuel, sans engagement. Obtenez votre devis personnalisé en 24h.</p>
-          <a href="mailto:contact@facilix.com?subject=Demande de devis Boost" class="btn-view-cta" style="background:#E83A2D;">
+          <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#E83A2D;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Demander un devis
           </a>
@@ -1899,7 +2046,7 @@
         <span class="view-hero-tag">Service — Identité visuelle</span>
         <h1 class="view-hero-title">Une marque qui<br />laisse une impression</h1>
         <p class="view-hero-desc">Nous créons votre identité visuelle de A à Z : logo, charte graphique, supports de communication et brand book — tout ce dont votre marque a besoin pour briller.</p>
-        <a href="mailto:contact@facilix.com?subject=Demande de devis Brand Visuals" class="btn-view-cta" style="background:#fff;color:#D63384;">
+        <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#fff;color:#D63384;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           Demander un devis
         </a>
@@ -1961,7 +2108,7 @@
         <div class="view-cta-inner">
           <h2 class="view-cta-title">Créons votre identité ensemble</h2>
           <p class="view-cta-sub">Obtenez votre devis en 24h. Brief, moodboard et première proposition inclus.</p>
-          <a href="mailto:contact@facilix.com?subject=Demande de devis Brand Visuals" class="btn-view-cta" style="background:#D63384;">
+          <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#D63384;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Demander un devis
           </a>
@@ -1985,7 +2132,7 @@
         <span class="view-hero-tag">Service — Production vidéo</span>
         <h1 class="view-hero-title">Des vidéos qui<br />parlent pour vous</h1>
         <p class="view-hero-desc">De la conception au rendu final, nous gérons tout : script, tournage, montage et diffusion multi-formats. Des contenus qui captivent, convertissent et durent.</p>
-        <a href="mailto:contact@facilix.com?subject=Demande de devis Video Production" class="btn-view-cta" style="background:#fff;color:#B45309;">
+        <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#fff;color:#B45309;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           Demander un devis
         </a>
@@ -2047,7 +2194,7 @@
         <div class="view-cta-inner">
           <h2 class="view-cta-title">Votre prochaine vidéo vous attend</h2>
           <p class="view-cta-sub">Obtenez votre devis en 24h avec une première estimation du concept incluse.</p>
-          <a href="mailto:contact@facilix.com?subject=Demande de devis Video Production" class="btn-view-cta" style="background:#F59E0B;">
+          <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#F59E0B;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Demander un devis
           </a>
@@ -2071,7 +2218,7 @@
         <span class="view-hero-tag">Service — Automatisation métier</span>
         <h1 class="view-hero-title">Travaillez moins,<br />accomplissez plus</h1>
         <p class="view-hero-desc">Nous automatisons vos processus métier répétitifs : facturation, relances, workflows, intégrations — pour que votre équipe se concentre sur ce qui compte vraiment.</p>
-        <a href="mailto:contact@facilix.com?subject=Demande de devis Business Automation" class="btn-view-cta" style="background:#fff;color:#4A5568;">
+        <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#fff;color:#4A5568;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           Demander un devis
         </a>
@@ -2133,7 +2280,7 @@
         <div class="view-cta-inner">
           <h2 class="view-cta-title">Prêt à automatiser ?</h2>
           <p class="view-cta-sub">Décrivez-nous vos processus et obtenez une proposition d'automatisation sur mesure.</p>
-          <a href="mailto:contact@facilix.com?subject=Demande de devis Business Automation" class="btn-view-cta" style="background:#4A5568;">
+          <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#4A5568;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Demander un devis
           </a>
@@ -2157,7 +2304,7 @@
         <span class="view-hero-tag">Service — Développement web</span>
         <h1 class="view-hero-title">Votre site, votre<br />vitrine digitale</h1>
         <p class="view-hero-desc">Nous concevons et développons des sites web et applications sur mesure — performants, optimisés SEO et conçus pour convertir vos visiteurs en clients.</p>
-        <a href="mailto:contact@facilix.com?subject=Demande de devis Web Dev" class="btn-view-cta" style="background:#fff;color:#0AABBD;">
+        <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#fff;color:#0AABBD;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           Demander un devis
         </a>
@@ -2219,10 +2366,77 @@
         <div class="view-cta-inner">
           <h2 class="view-cta-title">Lancez votre projet web</h2>
           <p class="view-cta-sub">Obtenez votre devis en 24h avec un premier wireframe de votre site inclus gratuitement.</p>
-          <a href="mailto:contact@facilix.com?subject=Demande de devis Web Dev" class="btn-view-cta" style="background:#0AABBD;">
+          <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#0AABBD;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Demander un devis
           </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW: Contact -->
+  <div id="view-contact" class="fx-view" aria-label="Vue Contact">
+    <div class="view-back-bar">
+      <div class="container">
+        <button class="view-back-btn" onclick="showHome()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Retour à l'accueil
+        </button>
+      </div>
+    </div>
+    <div class="contact-form-section">
+      <div class="container">
+        <div class="contact-form-inner">
+          <h1 class="contact-form-title">Parlons de votre projet</h1>
+          <p class="contact-form-sub">Chaque grande réussite commence par une conversation.</p>
+          <form id="contactForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cf-name">Nom complet <span aria-hidden="true">*</span></label>
+                <input type="text" id="cf-name" name="from_name" required placeholder="Jean Dupont" autocomplete="name" />
+              </div>
+              <div class="form-group">
+                <label for="cf-email">Email <span aria-hidden="true">*</span></label>
+                <input type="email" id="cf-email" name="from_email" required placeholder="vous@exemple.com" autocomplete="email" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cf-phone">Téléphone <span style="font-weight:400;color:var(--muted);">(optionnel)</span></label>
+                <input type="tel" id="cf-phone" name="phone" placeholder="+509 XX XX XXXX" autocomplete="tel" />
+              </div>
+              <div class="form-group">
+                <label for="cf-subject">Sujet <span aria-hidden="true">*</span></label>
+                <select id="cf-subject" name="subject" required>
+                  <option value="" disabled selected>Sélectionner un sujet…</option>
+                  <option value="Demander une démo ClassPilot">Demander une démo ClassPilot</option>
+                  <option value="Demander une démo SchoolPilot">Demander une démo SchoolPilot</option>
+                  <option value="Demander une démo ShopPilot">Demander une démo ShopPilot</option>
+                  <option value="Service Brand Visuals">Service Brand Visuals</option>
+                  <option value="Service Video Production">Service Video Production</option>
+                  <option value="Service Business Automation">Service Business Automation</option>
+                  <option value="Service Web Dev">Service Web Dev</option>
+                  <option value="Service Boost">Service Boost</option>
+                  <option value="Autre">Autre</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cf-message">Message <span aria-hidden="true">*</span></label>
+              <textarea id="cf-message" name="message" required placeholder="Décrivez votre projet ou votre demande…"></textarea>
+            </div>
+            <button type="submit" class="btn-contact-submit" id="contactSubmit">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+              Envoyer le message
+            </button>
+            <div class="contact-msg success" id="contactSuccess" role="alert">
+              Votre message a été envoyé. Nous vous répondons sous peu.
+            </div>
+            <div class="contact-msg error" id="contactError" role="alert">
+              Une erreur est survenue. Contactez-nous directement à <a href="mailto:contact@facilix.com" style="color:inherit;text-decoration:underline;">contact@facilix.com</a>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -2282,6 +2496,47 @@
       HOME_SECTIONS.forEach(s => { document.getElementById(s).style.display = ''; });
       document.querySelectorAll('.fx-view').forEach(v => { v.style.display = 'none'; });
       window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    // ─── EmailJS ───
+    // TODO: remplacer YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, YOUR_PUBLIC_KEY par les vraies clés EmailJS
+    emailjs.init('YOUR_PUBLIC_KEY');
+
+    const contactForm = document.getElementById('contactForm');
+    const contactSubmit = document.getElementById('contactSubmit');
+    const contactSuccess = document.getElementById('contactSuccess');
+    const contactError = document.getElementById('contactError');
+    const submitOriginalHTML = contactSubmit ? contactSubmit.innerHTML : '';
+
+    if (contactForm) {
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name    = document.getElementById('cf-name').value.trim();
+        const email   = document.getElementById('cf-email').value.trim();
+        const subject = document.getElementById('cf-subject').value;
+        const message = document.getElementById('cf-message').value.trim();
+
+        if (!name || !email || !subject || !message) return;
+
+        contactSubmit.disabled = true;
+        contactSubmit.textContent = 'Envoi en cours…';
+        contactSuccess.style.display = 'none';
+        contactError.style.display   = 'none';
+
+        emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+          .then(function() {
+            contactSuccess.style.display = 'block';
+            contactForm.reset();
+            contactSubmit.disabled = false;
+            contactSubmit.innerHTML = submitOriginalHTML;
+          })
+          .catch(function() {
+            contactError.style.display = 'block';
+            contactSubmit.disabled = false;
+            contactSubmit.innerHTML = submitOriginalHTML;
+          });
+      });
     }
   </script>
 </body>
