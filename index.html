@@ -1489,11 +1489,11 @@
         </a>
 
         <nav aria-label="Navigation principale">
-          <a href="#products">Produits</a>
+          <a href="#products" onclick="navigateTo('products'); return false;">Produits</a>
           <a href="#" onclick="showView('pricing'); return false;">Tarifs</a>
-          <a href="#services">Services</a>
-          <a href="#why">Pourquoi nous</a>
-          <a href="#contact">Contact</a>
+          <a href="#services" onclick="navigateTo('services'); return false;">Services</a>
+          <a href="#why" onclick="navigateTo('why'); return false;">Pourquoi nous</a>
+          <a href="#" onclick="showView('contact'); return false;">Contact</a>
           <a href="#" class="nav-cta" onclick="showView('contact'); return false;">Demander une démo</a>
         </nav>
 
@@ -1504,11 +1504,11 @@
     </div>
 
     <nav class="mobile-nav" id="mobileNav" aria-label="Navigation mobile">
-      <a href="#products">Produits</a>
+      <a href="#products" onclick="navigateTo('products'); return false;">Produits</a>
       <a href="#" onclick="showView('pricing'); return false;">Tarifs</a>
-      <a href="#services">Services</a>
-      <a href="#why">Pourquoi nous</a>
-      <a href="#contact">Contact</a>
+      <a href="#services" onclick="navigateTo('services'); return false;">Services</a>
+      <a href="#why" onclick="navigateTo('why'); return false;">Pourquoi nous</a>
+      <a href="#" onclick="showView('contact'); return false;">Contact</a>
       <a href="#" class="nav-cta" onclick="showView('contact'); return false;">Demander une démo</a>
     </nav>
   </header>
@@ -1547,10 +1547,6 @@
           <div class="stat-card" role="listitem">
             <div class="stat-number">4</div>
             <div class="stat-label">Services métier</div>
-          </div>
-          <div class="stat-card" role="listitem">
-            <div class="stat-number">🇭🇹</div>
-            <div class="stat-label">Fait en Haïti</div>
           </div>
         </div>
       </div>
@@ -2773,6 +2769,14 @@
       const view = document.getElementById('view-' + id);
       if (view) { view.style.display = 'block'; }
       window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    function navigateTo(sectionId) {
+      showHome();
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     }
 
     function subscribeTo(product) {
