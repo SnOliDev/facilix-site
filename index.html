@@ -4,6 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FaciliX — Simplify Everything</title>
+
+  <!-- SEO -->
+  <meta name="description" content="FaciliX — Logiciels SaaS et services digitaux pour simplifier la gestion de votre entreprise. SchoolPilot, ShopPilot, ClassPilot et services créatifs.">
+  <meta name="keywords" content="SaaS Haïti, gestion scolaire, point de vente, e-learning, FaciliX, SchoolPilot, ShopPilot">
+  <meta name="author" content="Olivier Strid-Lord François — FaciliX">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="FaciliX — Simplify Everything.">
+  <meta property="og:description" content="Logiciels SaaS et services digitaux pour simplifier la gestion de votre entreprise.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://facilix.com">
+  <meta property="og:locale" content="fr_FR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="FaciliX — Simplify Everything.">
+  <meta name="twitter:description" content="Logiciels SaaS et services digitaux pour simplifier la gestion de votre entreprise.">
+
+  <!-- Favicon placeholder -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231A3C5E'/><text y='.9em' font-size='60' x='10' fill='white' font-family='sans-serif' font-weight='bold'>FX</text></svg>">
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
@@ -856,6 +878,44 @@
 
     .footer-legal a:hover { color: rgba(255,255,255,.7); }
 
+    .footer-social {
+      display: flex;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .footer-social a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+
+    .footer-social a:hover { transform: translateY(-2px); opacity: .85; }
+
+    .footer-social svg { width: 28px; height: 28px; }
+
+    /* ─── WHATSAPP FLOAT ─── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,.3);
+      z-index: 999;
+      transition: transform var(--transition);
+    }
+
+    .whatsapp-float:hover { transform: scale(1.08); }
+
+    .whatsapp-float svg { width: 30px; height: 30px; }
+
     /* ─── RESPONSIVE ─── */
     @media (max-width: 1024px) {
       .products-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1155,6 +1215,122 @@
       .view-features-section, .view-cta-section { padding: 56px 0; }
     }
 
+    /* ─── PRICING VIEW ─── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .pricing-card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .pricing-card:not(.pricing-card-disabled):hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--pricing-accent);
+    }
+
+    .pricing-tag {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 100px;
+      background: rgba(0,0,0,.06);
+      color: var(--pricing-accent);
+      margin-bottom: 14px;
+    }
+
+    .pricing-name {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .pricing-price {
+      font-size: 1.9rem;
+      font-weight: 900;
+      color: var(--pricing-accent);
+      margin-bottom: 20px;
+    }
+
+    .pricing-period {
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 28px;
+      flex: 1;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .875rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .pricing-features li::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--pricing-accent);
+      flex-shrink: 0;
+    }
+
+    .btn-pricing {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 20px;
+      font-family: inherit;
+      font-size: .9rem;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      transition: transform var(--transition), filter var(--transition);
+    }
+
+    .btn-pricing:hover { transform: translateY(-2px); filter: brightness(1.08); }
+
+    .pricing-card-disabled { opacity: .6; }
+
+    .pricing-card-disabled .pricing-price { color: var(--muted); }
+
+    .btn-pricing:disabled {
+      background: var(--border);
+      color: var(--muted);
+      cursor: not-allowed;
+      transform: none;
+      filter: none;
+    }
+
+    @media (max-width: 768px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+
     /* ─── CONTACT FORM VIEW ─── */
     .contact-form-section {
       padding: 80px 0;
@@ -1314,6 +1490,7 @@
 
         <nav aria-label="Navigation principale">
           <a href="#products">Produits</a>
+          <a href="#" onclick="showView('pricing'); return false;">Tarifs</a>
           <a href="#services">Services</a>
           <a href="#why">Pourquoi nous</a>
           <a href="#contact">Contact</a>
@@ -1328,6 +1505,7 @@
 
     <nav class="mobile-nav" id="mobileNav" aria-label="Navigation mobile">
       <a href="#products">Produits</a>
+      <a href="#" onclick="showView('pricing'); return false;">Tarifs</a>
       <a href="#services">Services</a>
       <a href="#why">Pourquoi nous</a>
       <a href="#contact">Contact</a>
@@ -1618,7 +1796,7 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Demander une démo
           </a>
-          <a href="tel:+50912345678" class="btn-ghost">
+          <a href="tel:+50942739283" class="btn-ghost">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.4 2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.16 6.16l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             Nous appeler
           </a>
@@ -1637,14 +1815,37 @@
             <span class="logo-text">FaciliX<sup>™</sup></span>
           </a>
           <p class="footer-tagline">Simplifier la gestion des entreprises caribéennes. Basé à Saint-Marc, Haïti.</p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/facilixsolutions" target="_blank" aria-label="Instagram">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="24" height="24" rx="6" fill="url(#ig-grad)"/>
+                <defs><linearGradient id="ig-grad" x1="0" y1="24" x2="24" y2="0"><stop offset="0%" stop-color="#f09433"/><stop offset="25%" stop-color="#e6683c"/><stop offset="50%" stop-color="#dc2743"/><stop offset="75%" stop-color="#cc2366"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs>
+                <circle cx="12" cy="12" r="4" stroke="white" stroke-width="1.8" fill="none"/>
+                <circle cx="17" cy="7" r="1.2" fill="white"/>
+                <rect x="3" y="3" width="18" height="18" rx="5" stroke="white" stroke-width="1.8" fill="none"/>
+              </svg>
+            </a>
+            <a href="https://www.facebook.com/share/19WzdHbYp6/" target="_blank" aria-label="Facebook">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="#1877F2" xmlns="http://www.w3.org/2000/svg">
+                <rect width="24" height="24" rx="6" fill="#1877F2"/>
+                <path d="M15.5 8H13.5C13.2 8 13 8.2 13 8.5V10H15.5L15.2 12.5H13V19H10.5V12.5H9V10H10.5V8.5C10.5 6.6 11.6 5.5 13.5 5.5H15.5V8Z" fill="white"/>
+              </svg>
+            </a>
+            <a href="https://wa.me/50942739283" target="_blank" aria-label="WhatsApp">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="24" height="24" rx="6" fill="#25D366"/>
+                <path d="M12 4C7.6 4 4 7.6 4 12C4 13.4 4.4 14.8 5 16L4 20L8.2 19C9.4 19.6 10.7 20 12 20C16.4 20 20 16.4 20 12C20 7.6 16.4 4 12 4ZM16 14.8C15.8 15.3 15 15.8 14.5 15.8C13.5 15.9 11 14.9 9.5 13.4C8.3 12.2 7.5 10.5 7.3 10C7.1 9.5 7.2 9 7.5 8.7L8 8.2C8.2 8 8.5 8 8.7 8.2L9.7 9.4C9.9 9.6 9.9 9.9 9.7 10.1L9.3 10.5C9.1 10.7 9.1 11 9.3 11.2C9.7 11.8 10.3 12.4 10.9 12.8C11.1 13 11.4 13 11.6 12.8L12 12.4C12.2 12.2 12.5 12.2 12.7 12.4L13.9 13.4C14.1 13.6 14.1 13.9 13.9 14.1L16 14.8Z" fill="white"/>
+              </svg>
+            </a>
+          </div>
         </div>
 
         <div class="footer-col">
           <h4>Produits</h4>
           <ul>
             <li><a href="#products">ClassPilot</a></li>
+            <li><a href="#products">SchoolPilot</a></li>
             <li><a href="#products">ShopPilot</a></li>
-            <li><a href="#products">Boost</a></li>
           </ul>
         </div>
 
@@ -1662,14 +1863,14 @@
           <h4>Contact</h4>
           <ul>
             <li><a href="#" onclick="showView('contact'); return false;">contact@facilix.com</a></li>
-            <li><a href="tel:+50912345678">+509 12 34 5678</a></li>
+            <li><a href="tel:+50942739283">+509 4273-9283</a></li>
             <li><a href="#cta">Demander une démo</a></li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <p class="footer-copy">© 2025 FaciliX ™ — Fondé par Olivier Strid-Lord François. Tous droits réservés.</p>
+        <p class="footer-copy">© <span id="year"></span> FaciliX ™ — Fondé par Olivier Strid-Lord François. Tous droits réservés.</p>
         <nav class="footer-legal" aria-label="Liens légaux">
           <a href="#">Mentions légales</a>
           <a href="#">Confidentialité</a>
@@ -1945,6 +2146,78 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Demander une démo ShopPilot
           </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW: Pricing -->
+  <div id="view-pricing" class="fx-view" aria-label="Vue Tarifs">
+    <div class="view-back-bar">
+      <div class="container">
+        <button class="view-back-btn" onclick="showHome()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Retour à l'accueil
+        </button>
+      </div>
+    </div>
+    <div class="view-hero" style="background:linear-gradient(160deg,#122D47 0%,#1A3C5E 55%,#234E7A 100%);">
+      <div class="container view-hero-inner">
+        <span class="view-hero-tag">Tarifs</span>
+        <h1 class="view-hero-title">Un tarif simple<br />pour chaque outil</h1>
+        <p class="view-hero-desc">Abonnements mensuels, sans engagement. Choisissez le produit FaciliX adapté à votre activité.</p>
+      </div>
+    </div>
+    <div class="view-features-section">
+      <div class="container">
+        <h2 class="view-features-title">Nos abonnements</h2>
+        <div class="pricing-grid">
+
+          <div class="pricing-card" style="--pricing-accent:#1A3C5E;">
+            <div class="pricing-tag">Gestion Scolaire</div>
+            <h3 class="pricing-name">SchoolPilot</h3>
+            <div class="pricing-price">5 000 <span class="pricing-period">HTG/mois</span></div>
+            <ul class="pricing-features">
+              <li>Classes &amp; élèves</li>
+              <li>Bulletins &amp; notes</li>
+              <li>Écolage &amp; payroll</li>
+              <li>Rapports PDF</li>
+            </ul>
+            <button type="button" class="btn-pricing" style="background:#1A3C5E;" onclick="subscribeTo('Abonnement SchoolPilot — 5 000 HTG/mois')">
+              S'abonner à SchoolPilot
+            </button>
+          </div>
+
+          <div class="pricing-card" style="--pricing-accent:#E8821A;">
+            <div class="pricing-tag">Commerce</div>
+            <h3 class="pricing-name">ShopPilot</h3>
+            <div class="pricing-price">1 500 <span class="pricing-period">HTG/mois</span></div>
+            <ul class="pricing-features">
+              <li>Boutique en ligne personnalisée</li>
+              <li>Paiement mobile intégré</li>
+              <li>Gestion des stocks &amp; commandes</li>
+              <li>Rapports de ventes</li>
+            </ul>
+            <button type="button" class="btn-pricing" style="background:#E8821A;" onclick="subscribeTo('Abonnement ShopPilot — 1 500 HTG/mois')">
+              S'abonner à ShopPilot
+            </button>
+          </div>
+
+          <div class="pricing-card pricing-card-disabled" style="--pricing-accent:#2D9E6B;">
+            <div class="pricing-tag">E-Learning</div>
+            <h3 class="pricing-name">ClassPilot</h3>
+            <div class="pricing-price">—</div>
+            <ul class="pricing-features">
+              <li>Cours en ligne &amp; vidéo</li>
+              <li>Espace étudiant &amp; enseignant</li>
+              <li>Devoirs &amp; soumissions</li>
+              <li>PWA + Android</li>
+            </ul>
+            <button type="button" class="btn-pricing" disabled>
+              Bientôt disponible
+            </button>
+          </div>
+
         </div>
       </div>
     </div>
@@ -2404,7 +2677,7 @@
             <div class="form-row">
               <div class="form-group">
                 <label for="cf-phone">Téléphone <span style="font-weight:400;color:var(--muted);">(optionnel)</span></label>
-                <input type="tel" id="cf-phone" name="phone" placeholder="+509 XX XX XXXX" autocomplete="tel" />
+                <input type="tel" id="cf-phone" name="phone" placeholder="+509 4273-9283" autocomplete="tel" />
               </div>
               <div class="form-group">
                 <label for="cf-subject">Sujet <span aria-hidden="true">*</span></label>
@@ -2413,6 +2686,8 @@
                   <option value="Demander une démo ClassPilot">Demander une démo ClassPilot</option>
                   <option value="Demander une démo SchoolPilot">Demander une démo SchoolPilot</option>
                   <option value="Demander une démo ShopPilot">Demander une démo ShopPilot</option>
+                  <option value="Abonnement SchoolPilot — 5 000 HTG/mois">Abonnement SchoolPilot — 5 000 HTG/mois</option>
+                  <option value="Abonnement ShopPilot — 1 500 HTG/mois">Abonnement ShopPilot — 1 500 HTG/mois</option>
                   <option value="Service Brand Visuals">Service Brand Visuals</option>
                   <option value="Service Video Production">Service Video Production</option>
                   <option value="Service Business Automation">Service Business Automation</option>
@@ -2442,8 +2717,16 @@
     </div>
   </div>
 
+  <!-- ═══════════════════════════════════════════════════════ WHATSAPP FLOAT -->
+  <a href="https://wa.me/50942739283" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Contacter FaciliX sur WhatsApp">
+    <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.001 2c-5.514 0-9.996 4.478-9.996 9.997 0 1.762.462 3.482 1.34 4.997L2 22l5.144-1.352a9.96 9.96 0 0 0 4.856 1.238h.001c5.514 0 9.996-4.479 9.996-9.997C21.997 6.478 17.515 2 12.001 2zm5.848 15.845a8.302 8.302 0 0 1-5.848 2.423h-.001a8.317 8.317 0 0 1-4.244-1.163l-.305-.181-3.152.828.842-3.075-.198-.315a8.293 8.293 0 0 1-1.276-4.415c0-4.591 3.737-8.328 8.333-8.328 2.226 0 4.318.868 5.891 2.442a8.276 8.276 0 0 1 2.437 5.892c0 4.591-3.737 8.327-8.329 8.892z"/></svg>
+  </a>
+
   <!-- ═══════════════════════════════════════════════════════ JS -->
   <script>
+    // ─── Footer year ───
+    document.getElementById('year').textContent = new Date().getFullYear();
+
     // ─── Header scroll shadow ───
     const header = document.getElementById('header');
     const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 10);
@@ -2492,6 +2775,14 @@
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
 
+    function subscribeTo(product) {
+      showView('contact');
+      setTimeout(() => {
+        const select = document.getElementById('cf-subject');
+        if (select) select.value = product;
+      }, 100);
+    }
+
     function showHome() {
       HOME_SECTIONS.forEach(s => { document.getElementById(s).style.display = ''; });
       document.querySelectorAll('.fx-view').forEach(v => { v.style.display = 'none'; });
@@ -2499,8 +2790,7 @@
     }
 
     // ─── EmailJS ───
-    // TODO: remplacer YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, YOUR_PUBLIC_KEY par les vraies clés EmailJS
-    emailjs.init('YOUR_PUBLIC_KEY');
+    emailjs.init('e82Vosp-T8cG0IxRb');
 
     const contactForm = document.getElementById('contactForm');
     const contactSubmit = document.getElementById('contactSubmit');
@@ -2524,14 +2814,15 @@
         contactSuccess.style.display = 'none';
         contactError.style.display   = 'none';
 
-        emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+        emailjs.sendForm('service_8vu8i38', 'template_v4ounph', this)
           .then(function() {
             contactSuccess.style.display = 'block';
             contactForm.reset();
             contactSubmit.disabled = false;
             contactSubmit.innerHTML = submitOriginalHTML;
           })
-          .catch(function() {
+          .catch(function(error) {
+            console.log(error);
             contactError.style.display = 'block';
             contactSubmit.disabled = false;
             contactSubmit.innerHTML = submitOriginalHTML;
