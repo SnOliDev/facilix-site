@@ -1327,6 +1327,34 @@
       margin-bottom: 10px;
     }
 
+    .pricing-toggle {
+      display: inline-flex;
+      align-self: flex-start;
+      background: var(--off-white);
+      border: 1.5px solid var(--border);
+      border-radius: 100px;
+      padding: 3px;
+      margin-bottom: 16px;
+    }
+
+    .pricing-toggle-btn {
+      border: none;
+      background: none;
+      font-family: inherit;
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--muted);
+      padding: 7px 16px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    .pricing-toggle-btn.active {
+      background: var(--pricing-accent, var(--brand));
+      color: #fff;
+    }
+
     .pricing-price {
       font-size: 1.9rem;
       font-weight: 900;
@@ -1338,6 +1366,19 @@
       font-size: .85rem;
       font-weight: 600;
       color: var(--muted);
+    }
+
+    .pricing-savings-badge {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: .75rem;
+      font-weight: 700;
+      color: #fff;
+      background: #2D9E6B;
+      border-radius: 100px;
+      padding: 4px 12px;
+      margin-top: -10px;
+      margin-bottom: 20px;
     }
 
     .pricing-features {
@@ -2120,6 +2161,20 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Demander une démo SchoolPilot
           </a>
+
+          <div class="pricing-card schoolpilot-pricing-card" style="--pricing-accent:#1A3C5E; text-align:left; max-width:320px; margin:32px auto 0;" data-monthly-label="Abonnement SchoolPilot — 5 000 HTG/mois" data-yearly-label="Abonnement SchoolPilot — 50 000 HTG/an">
+            <div class="pricing-tag">Gestion Scolaire</div>
+            <h3 class="pricing-name">SchoolPilot</h3>
+            <div class="pricing-toggle" role="group" aria-label="Cycle de facturation SchoolPilot">
+              <button type="button" class="pricing-toggle-btn active" data-period="monthly">Mensuel</button>
+              <button type="button" class="pricing-toggle-btn" data-period="yearly">Annuel</button>
+            </div>
+            <div class="pricing-price"><span class="pricing-price-amount">5 000</span> <span class="pricing-period">HTG/mois</span></div>
+            <div class="pricing-savings-badge" hidden>Économisez 10 000 HTG</div>
+            <button type="button" class="btn-pricing schoolpilot-subscribe-btn" style="background:#1A3C5E;">
+              S'abonner à SchoolPilot
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -2231,17 +2286,22 @@
         <h2 class="view-features-title">Nos abonnements</h2>
         <div class="pricing-grid">
 
-          <div class="pricing-card" style="--pricing-accent:#1A3C5E;">
+          <div class="pricing-card schoolpilot-pricing-card" style="--pricing-accent:#1A3C5E;" data-monthly-label="Abonnement SchoolPilot — 5 000 HTG/mois" data-yearly-label="Abonnement SchoolPilot — 50 000 HTG/an">
             <div class="pricing-tag">Gestion Scolaire</div>
             <h3 class="pricing-name">SchoolPilot</h3>
-            <div class="pricing-price">5 000 <span class="pricing-period">HTG/mois</span></div>
+            <div class="pricing-toggle" role="group" aria-label="Cycle de facturation SchoolPilot">
+              <button type="button" class="pricing-toggle-btn active" data-period="monthly">Mensuel</button>
+              <button type="button" class="pricing-toggle-btn" data-period="yearly">Annuel</button>
+            </div>
+            <div class="pricing-price"><span class="pricing-price-amount">5 000</span> <span class="pricing-period">HTG/mois</span></div>
+            <div class="pricing-savings-badge" hidden>Économisez 10 000 HTG</div>
             <ul class="pricing-features">
               <li>Classes &amp; élèves</li>
               <li>Bulletins &amp; notes</li>
               <li>Écolage &amp; payroll</li>
               <li>Rapports PDF</li>
             </ul>
-            <button type="button" class="btn-pricing" style="background:#1A3C5E;" onclick="subscribeTo('Abonnement SchoolPilot — 5 000 HTG/mois')">
+            <button type="button" class="btn-pricing schoolpilot-subscribe-btn" style="background:#1A3C5E;">
               S'abonner à SchoolPilot
             </button>
           </div>
@@ -2745,6 +2805,7 @@
                   <option value="Demander une démo SchoolPilot">Demander une démo SchoolPilot</option>
                   <option value="Demander une démo ShopPilot">Demander une démo ShopPilot</option>
                   <option value="Abonnement SchoolPilot — 5 000 HTG/mois">Abonnement SchoolPilot — 5 000 HTG/mois</option>
+                  <option value="Abonnement SchoolPilot — 50 000 HTG/an">Abonnement SchoolPilot — 50 000 HTG/an</option>
                   <option value="Abonnement ShopPilot — 1 500 HTG/mois">Abonnement ShopPilot — 1 500 HTG/mois</option>
                   <option value="Service Brand Visuals">Service Brand Visuals</option>
                   <option value="Service Video Production">Service Video Production</option>
@@ -2869,6 +2930,40 @@
         if (select) select.value = product;
       }, 100);
     }
+
+    // ─── SchoolPilot pricing toggle (Mensuel / Annuel) ───
+    function initSchoolPilotPricing(card) {
+      const toggleBtns = card.querySelectorAll('.pricing-toggle-btn');
+      const priceAmount = card.querySelector('.pricing-price-amount');
+      const pricePeriod = card.querySelector('.pricing-period');
+      const savingsBadge = card.querySelector('.pricing-savings-badge');
+      const subscribeBtn = card.querySelector('.schoolpilot-subscribe-btn');
+
+      toggleBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          toggleBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          if (btn.dataset.period === 'yearly') {
+            priceAmount.textContent = '50 000';
+            pricePeriod.textContent = 'HTG/an';
+            savingsBadge.hidden = false;
+          } else {
+            priceAmount.textContent = '5 000';
+            pricePeriod.textContent = 'HTG/mois';
+            savingsBadge.hidden = true;
+          }
+        });
+      });
+
+      subscribeBtn.addEventListener('click', () => {
+        const active = card.querySelector('.pricing-toggle-btn.active');
+        const period = active ? active.dataset.period : 'monthly';
+        const label = period === 'yearly' ? card.dataset.yearlyLabel : card.dataset.monthlyLabel;
+        subscribeTo(label);
+      });
+    }
+
+    document.querySelectorAll('.schoolpilot-pricing-card').forEach(initSchoolPilotPricing);
 
     function showHome() {
       HOME_SECTIONS.forEach(s => { document.getElementById(s).style.display = ''; });
