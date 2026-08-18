@@ -484,9 +484,9 @@
       transition: transform var(--transition);
     }
 
-    .product-card:hover::before { transform: scaleX(1); }
+    .product-card:not(.product-card-disabled):hover::before { transform: scaleX(1); }
 
-    .product-card:hover {
+    .product-card:not(.product-card-disabled):hover {
       transform: translateY(-6px);
       box-shadow: 0 20px 50px rgba(0,0,0,.12);
       border-color: transparent;
@@ -497,13 +497,13 @@
     .product-card[data-color="shoppilot"]   { --card-color: var(--shoppilot); }
     .product-card[data-color="boost"]       { --card-color: var(--boost); }
 
-    .product-card:hover .product-icon-wrap {
+    .product-card:not(.product-card-disabled):hover .product-icon-wrap {
       background: var(--card-color);
       border-color: var(--card-color);
     }
 
-    .product-card:hover .product-icon-wrap svg { color: #fff; }
-    .product-card:hover .product-tag { background: var(--card-color); color: #fff; }
+    .product-card:not(.product-card-disabled):hover .product-icon-wrap svg { color: #fff; }
+    .product-card:not(.product-card-disabled):hover .product-tag { background: var(--card-color); color: #fff; }
 
     .product-icon-wrap {
       width: 56px;
@@ -591,19 +591,66 @@
 
     .product-link:hover { gap: 10px; }
 
+    .product-card-disabled { opacity: .6; }
+
+    .badge-coming-soon {
+      display: inline-block;
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--muted);
+      background: var(--off-white);
+      border: 1.5px dashed var(--border);
+      border-radius: 100px;
+      padding: 9px 16px;
+      margin-top: 28px;
+      line-height: 1.4;
+    }
+
+    .badge-coming-soon-dark {
+      display: inline-block;
+      font-size: .9rem;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(255,255,255,.15);
+      border: 1.5px dashed rgba(255,255,255,.4);
+      border-radius: 100px;
+      padding: 12px 22px;
+      line-height: 1.4;
+    }
+
     /* ─── SERVICES ─── */
     #services {
       padding: 100px 0;
       background: #fff;
     }
 
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+    .services-marquee {
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    }
+
+    .services-track {
+      display: flex;
+      width: max-content;
       gap: 22px;
+      animation: services-scroll 38s linear infinite;
+    }
+
+    .services-marquee:hover .services-track { animation-play-state: paused; }
+
+    @keyframes services-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .services-track { animation: none; }
     }
 
     .service-card {
+      flex: 0 0 300px;
+      width: 300px;
       border-radius: var(--radius);
       padding: 30px 26px;
       border: 1.5px solid var(--border);
@@ -919,7 +966,6 @@
     /* ─── RESPONSIVE ─── */
     @media (max-width: 1024px) {
       .products-grid { grid-template-columns: repeat(2, 1fr); }
-      .services-grid { grid-template-columns: repeat(2, 1fr); }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; }
     }
 
@@ -932,11 +978,12 @@
       .stat-card { flex: 1; min-width: 120px; }
 
       .products-grid { grid-template-columns: 1fr; }
-      .services-grid { grid-template-columns: 1fr; }
       .why-grid { grid-template-columns: 1fr; }
 
       #hero { padding: 64px 0 72px; }
       #products, #services, #why, #cta { padding: 72px 0; }
+
+      .service-card { flex-basis: 240px; width: 240px; }
     }
 
     @media (max-width: 560px) {
@@ -1558,14 +1605,14 @@
     <div class="container">
       <header class="section-header">
         <div class="section-label">Produits SaaS</div>
-        <h2 class="section-title" id="products-heading">Des outils pensés<br />pour la Caraïbe</h2>
-        <p class="section-sub">Trois solutions SaaS verticales, conçues pour les réalités du terrain haïtien et caribéen.</p>
+        <h2 class="section-title" id="products-heading">Nos Produits</h2>
+        <p class="section-sub">Des solutions SaaS pensées pour simplifier vos activités.</p>
       </header>
 
       <div class="products-grid">
 
         <!-- ClassPilot -->
-        <article class="product-card" data-color="classpilot" aria-label="ClassPilot">
+        <article class="product-card product-card-disabled" data-color="classpilot" aria-label="ClassPilot">
           <div class="product-icon-wrap">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
@@ -1580,10 +1627,7 @@
             <li>Devoirs &amp; soumissions</li>
             <li>PWA + Android</li>
           </ul>
-          <a href="#" class="product-link" onclick="showView('classpilot'); return false;">
-            En savoir plus
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
+          <div class="badge-coming-soon">Bientôt disponible — Gratuit pour les abonnés SchoolPilot</div>
         </article>
 
         <!-- SchoolPilot -->
@@ -1641,93 +1685,178 @@
     <div class="container">
       <header class="section-header">
         <div class="section-label">Services</div>
-        <h2 class="section-title" id="services-heading">L'expertise qui<br />propulse votre marque</h2>
+        <h2 class="section-title" id="services-heading">Nos Services</h2>
         <p class="section-sub">Des services professionnels pour bâtir, automatiser et faire rayonner votre entreprise.</p>
       </header>
 
-      <div class="services-grid">
+      <div class="services-marquee">
+        <div class="services-track">
 
-        <!-- Brand Visuals -->
-        <article class="service-card" data-color="brand-vis" aria-label="Brand Visuals">
-          <div class="service-icon-bg">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-            </svg>
+          <!-- Brand Visuals -->
+          <article class="service-card" data-color="brand-vis" aria-label="Brand Visuals">
+            <div class="service-icon-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <span class="service-tag">Identité</span>
+            <h3 class="service-name">Brand Visuals</h3>
+            <p class="service-desc">Création d'identité visuelle complète : logo, charte graphique, supports de communication, et brand book.</p>
+            <button class="service-link" onclick="showView('brandvis')">
+              En savoir plus
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </article>
+
+          <!-- Video Production -->
+          <article class="service-card" data-color="video" aria-label="Video Production">
+            <div class="service-icon-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+              </svg>
+            </div>
+            <span class="service-tag">Contenu</span>
+            <h3 class="service-name">Video Production</h3>
+            <p class="service-desc">Tournage, montage et post-production pour vos publicités, présentations corporate et réseaux sociaux.</p>
+            <button class="service-link" onclick="showView('video')">
+              En savoir plus
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </article>
+
+          <!-- Business Automation -->
+          <article class="service-card" data-color="automation" aria-label="Business Automation">
+            <div class="service-icon-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 1.41 13.44M4.93 4.93A10 10 0 0 0 3.52 18.37"/>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
+              </svg>
+            </div>
+            <span class="service-tag">Efficacité</span>
+            <h3 class="service-name">Business Automation</h3>
+            <p class="service-desc">Automatisation de vos processus métier : facturation, relances, workflows internes, intégrations API.</p>
+            <button class="service-link" onclick="showView('automation')">
+              En savoir plus
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </article>
+
+          <!-- Web Dev -->
+          <article class="service-card" data-color="webdev" aria-label="Web Dev">
+            <div class="service-icon-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+              </svg>
+            </div>
+            <span class="service-tag">Digital</span>
+            <h3 class="service-name">Web Dev</h3>
+            <p class="service-desc">Conception et développement de sites web et applications web sur-mesure, performants et optimisés SEO.</p>
+            <button class="service-link" onclick="showView('webdev')">
+              En savoir plus
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </article>
+
+          <!-- Boost -->
+          <article class="service-card" data-color="boost" aria-label="Boost">
+            <div class="service-icon-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+              </svg>
+            </div>
+            <span class="service-tag">Croissance</span>
+            <h3 class="service-name">Boost</h3>
+            <p class="service-desc">Stratégie digitale, campagnes ciblées et reporting mensuel — votre partenaire de croissance en ligne.</p>
+            <button class="service-link" onclick="showView('boost')">
+              En savoir plus
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </article>
+
+          <div class="services-track-dup" aria-hidden="true" inert style="display:contents;">
+            <!-- Brand Visuals -->
+            <article class="service-card" data-color="brand-vis">
+              <div class="service-icon-bg">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+              </div>
+              <span class="service-tag">Identité</span>
+              <h3 class="service-name">Brand Visuals</h3>
+              <p class="service-desc">Création d'identité visuelle complète : logo, charte graphique, supports de communication, et brand book.</p>
+              <button class="service-link" tabindex="-1">
+                En savoir plus
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </article>
+
+            <!-- Video Production -->
+            <article class="service-card" data-color="video">
+              <div class="service-icon-bg">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                </svg>
+              </div>
+              <span class="service-tag">Contenu</span>
+              <h3 class="service-name">Video Production</h3>
+              <p class="service-desc">Tournage, montage et post-production pour vos publicités, présentations corporate et réseaux sociaux.</p>
+              <button class="service-link" tabindex="-1">
+                En savoir plus
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </article>
+
+            <!-- Business Automation -->
+            <article class="service-card" data-color="automation">
+              <div class="service-icon-bg">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 1.41 13.44M4.93 4.93A10 10 0 0 0 3.52 18.37"/>
+                  <path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
+                </svg>
+              </div>
+              <span class="service-tag">Efficacité</span>
+              <h3 class="service-name">Business Automation</h3>
+              <p class="service-desc">Automatisation de vos processus métier : facturation, relances, workflows internes, intégrations API.</p>
+              <button class="service-link" tabindex="-1">
+                En savoir plus
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </article>
+
+            <!-- Web Dev -->
+            <article class="service-card" data-color="webdev">
+              <div class="service-icon-bg">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+                </svg>
+              </div>
+              <span class="service-tag">Digital</span>
+              <h3 class="service-name">Web Dev</h3>
+              <p class="service-desc">Conception et développement de sites web et applications web sur-mesure, performants et optimisés SEO.</p>
+              <button class="service-link" tabindex="-1">
+                En savoir plus
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </article>
+
+            <!-- Boost -->
+            <article class="service-card" data-color="boost">
+              <div class="service-icon-bg">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+                </svg>
+              </div>
+              <span class="service-tag">Croissance</span>
+              <h3 class="service-name">Boost</h3>
+              <p class="service-desc">Stratégie digitale, campagnes ciblées et reporting mensuel — votre partenaire de croissance en ligne.</p>
+              <button class="service-link" tabindex="-1">
+                En savoir plus
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </article>
           </div>
-          <span class="service-tag">Identité</span>
-          <h3 class="service-name">Brand Visuals</h3>
-          <p class="service-desc">Création d'identité visuelle complète : logo, charte graphique, supports de communication, et brand book.</p>
-          <button class="service-link" onclick="showView('brandvis')">
-            En savoir plus
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
-        </article>
 
-        <!-- Video Production -->
-        <article class="service-card" data-color="video" aria-label="Video Production">
-          <div class="service-icon-bg">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
-            </svg>
-          </div>
-          <span class="service-tag">Contenu</span>
-          <h3 class="service-name">Video Production</h3>
-          <p class="service-desc">Tournage, montage et post-production pour vos publicités, présentations corporate et réseaux sociaux.</p>
-          <button class="service-link" onclick="showView('video')">
-            En savoir plus
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
-        </article>
-
-        <!-- Business Automation -->
-        <article class="service-card" data-color="automation" aria-label="Business Automation">
-          <div class="service-icon-bg">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 1.41 13.44M4.93 4.93A10 10 0 0 0 3.52 18.37"/>
-              <path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
-            </svg>
-          </div>
-          <span class="service-tag">Efficacité</span>
-          <h3 class="service-name">Business Automation</h3>
-          <p class="service-desc">Automatisation de vos processus métier : facturation, relances, workflows internes, intégrations API.</p>
-          <button class="service-link" onclick="showView('automation')">
-            En savoir plus
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
-        </article>
-
-        <!-- Web Dev -->
-        <article class="service-card" data-color="webdev" aria-label="Web Dev">
-          <div class="service-icon-bg">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
-            </svg>
-          </div>
-          <span class="service-tag">Digital</span>
-          <h3 class="service-name">Web Dev</h3>
-          <p class="service-desc">Conception et développement de sites web et applications web sur-mesure, performants et optimisés SEO.</p>
-          <button class="service-link" onclick="showView('webdev')">
-            En savoir plus
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
-        </article>
-
-        <!-- Boost -->
-        <article class="service-card" data-color="boost" aria-label="Boost">
-          <div class="service-icon-bg">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
-            </svg>
-          </div>
-          <span class="service-tag">Croissance</span>
-          <h3 class="service-name">Boost</h3>
-          <p class="service-desc">Stratégie digitale, campagnes ciblées et reporting mensuel — votre partenaire de croissance en ligne.</p>
-          <button class="service-link" onclick="showView('boost')">
-            En savoir plus
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
-        </article>
-
+        </div>
       </div>
     </div>
   </section>
@@ -1893,10 +2022,7 @@
         <span class="view-hero-tag">Produit SaaS — E-Learning</span>
         <h1 class="view-hero-title">Apprenez et enseignez,<br />sans limites</h1>
         <p class="view-hero-desc">Plateforme e-learning multi-tenant pour écoles et universités — cours en ligne, sessions vidéo, gestion des rôles enseignant et étudiant.</p>
-        <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#fff;color:#2D9E6B;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          Demander une démo ClassPilot
-        </a>
+        <div class="badge-coming-soon-dark">Bientôt disponible — Gratuit pour les abonnés SchoolPilot</div>
       </div>
     </div>
     <div class="view-features-section">
@@ -1959,11 +2085,8 @@
       <div class="container">
         <div class="view-cta-inner">
           <h2 class="view-cta-title">Prêt à lancer votre campus en ligne ?</h2>
-          <p class="view-cta-sub">Demandez une démonstration gratuite et découvrez ClassPilot en action avec votre équipe pédagogique.</p>
-          <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#2D9E6B;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            Demander une démo ClassPilot
-          </a>
+          <p class="view-cta-sub">ClassPilot arrive bientôt et sera offert gratuitement à tous les abonnés SchoolPilot.</p>
+          <div class="badge-coming-soon">Bientôt disponible — Gratuit pour les abonnés SchoolPilot</div>
           <p class="view-also">Besoin de gérer votre école (classes, écolage, payroll) ?
             <button class="view-also-btn" onclick="showView('schoolpilot')" style="color:#1A3C5E;">Découvrir SchoolPilot →</button>
           </p>
