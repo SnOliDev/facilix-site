@@ -964,6 +964,52 @@
 
     .footer-social svg { width: 28px; height: 28px; }
 
+    /* ─── LEGAL PAGES ─── */
+    .legal-section {
+      padding: 72px 0 100px;
+      background: #fff;
+    }
+
+    .legal-container { max-width: 720px; }
+
+    .legal-title {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--brand-dark);
+      margin-bottom: 32px;
+    }
+
+    .legal-body h2 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--brand-dark);
+      margin-top: 32px;
+      margin-bottom: 12px;
+    }
+
+    .legal-body h2:first-child { margin-top: 0; }
+
+    .legal-body p {
+      font-size: .95rem;
+      color: var(--text);
+      line-height: 1.75;
+      margin-bottom: 10px;
+    }
+
+    .legal-body ul {
+      margin: 0 0 10px 0;
+      padding-left: 20px;
+    }
+
+    .legal-body li {
+      font-size: .95rem;
+      color: var(--text);
+      line-height: 1.75;
+      margin-bottom: 6px;
+    }
+
+    .legal-body a { color: var(--brand); font-weight: 600; }
+
     /* ─── WHATSAPP FLOAT ─── */
     .whatsapp-float {
       position: fixed;
@@ -1977,9 +2023,9 @@
       <div class="footer-bottom">
         <p class="footer-copy">© <span id="year"></span> FaciliX ™ — Fondé par Olivier Strid-Lord François. Tous droits réservés.</p>
         <nav class="footer-legal" aria-label="Liens légaux">
-          <a href="#">Mentions légales</a>
-          <a href="#">Confidentialité</a>
-          <a href="#">CGU</a>
+          <a href="#" onclick="showView('legal'); return false;">Mentions légales</a>
+          <a href="#" onclick="showView('privacy'); return false;">Confidentialité</a>
+          <a href="#" onclick="showView('cgu'); return false;">CGU</a>
         </nav>
       </div>
     </div>
@@ -2309,14 +2355,14 @@
           <div class="pricing-card" style="--pricing-accent:#E8821A;">
             <div class="pricing-tag">Commerce</div>
             <h3 class="pricing-name">ShopPilot</h3>
-            <div class="pricing-price">1 500 <span class="pricing-period">HTG/mois</span></div>
+            <div class="pricing-price">2 500 <span class="pricing-period">HTG/mois</span></div>
             <ul class="pricing-features">
               <li>Boutique en ligne personnalisée</li>
               <li>Paiement mobile intégré</li>
               <li>Gestion des stocks &amp; commandes</li>
               <li>Rapports de ventes</li>
             </ul>
-            <button type="button" class="btn-pricing" style="background:#E8821A;" onclick="subscribeTo('Abonnement ShopPilot — 1 500 HTG/mois')">
+            <button type="button" class="btn-pricing" style="background:#E8821A;" onclick="subscribeTo('Abonnement ShopPilot — 2 500 HTG/mois')">
               S'abonner à ShopPilot
             </button>
           </div>
@@ -2801,12 +2847,11 @@
                 <label for="cf-subject">Sujet <span aria-hidden="true">*</span></label>
                 <select id="cf-subject" name="subject" required>
                   <option value="" disabled selected>Sélectionner un sujet…</option>
-                  <option value="Demander une démo ClassPilot">Demander une démo ClassPilot</option>
                   <option value="Demander une démo SchoolPilot">Demander une démo SchoolPilot</option>
                   <option value="Demander une démo ShopPilot">Demander une démo ShopPilot</option>
                   <option value="Abonnement SchoolPilot — 5 000 HTG/mois">Abonnement SchoolPilot — 5 000 HTG/mois</option>
                   <option value="Abonnement SchoolPilot — 50 000 HTG/an">Abonnement SchoolPilot — 50 000 HTG/an</option>
-                  <option value="Abonnement ShopPilot — 1 500 HTG/mois">Abonnement ShopPilot — 1 500 HTG/mois</option>
+                  <option value="Abonnement ShopPilot — 2 500 HTG/mois">Abonnement ShopPilot — 2 500 HTG/mois</option>
                   <option value="Service Brand Visuals">Service Brand Visuals</option>
                   <option value="Service Video Production">Service Video Production</option>
                   <option value="Service Business Automation">Service Business Automation</option>
@@ -2831,6 +2876,90 @@
               Une erreur est survenue. Contactez-nous directement à <a href="mailto:contact@facilix.com" style="color:inherit;text-decoration:underline;">contact@facilix.com</a>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW: Mentions légales -->
+  <div id="view-legal" class="fx-view" aria-label="Vue Mentions légales">
+    <div class="view-back-bar">
+      <div class="container">
+        <button class="view-back-btn" onclick="showHome()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Retour à l'accueil
+        </button>
+      </div>
+    </div>
+    <div class="legal-section">
+      <div class="container legal-container">
+        <h1 class="legal-title">Mentions légales</h1>
+        <div class="legal-body">
+          <h2>Éditeur du site</h2>
+          <p><strong>Raison sociale :</strong> FaciliX</p>
+          <p><strong>Email :</strong> <a href="mailto:contactfacilix@gmail.com">contactfacilix@gmail.com</a></p>
+          <p><strong>Téléphone :</strong> <a href="tel:+50942739283">+509 4273-9283</a></p>
+          <h2>Hébergement</h2>
+          <p>Cloudflare Inc., 101 Townsend Street, San Francisco, CA 94107</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW: Politique de confidentialité -->
+  <div id="view-privacy" class="fx-view" aria-label="Vue Politique de confidentialité">
+    <div class="view-back-bar">
+      <div class="container">
+        <button class="view-back-btn" onclick="showHome()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Retour à l'accueil
+        </button>
+      </div>
+    </div>
+    <div class="legal-section">
+      <div class="container legal-container">
+        <h1 class="legal-title">Politique de confidentialité</h1>
+        <div class="legal-body">
+          <h2>Données collectées</h2>
+          <p>Nom, email et téléphone, collectés uniquement via le formulaire de contact du site.</p>
+          <h2>Utilisation des données</h2>
+          <p>Ces informations servent exclusivement à répondre aux demandes des utilisateurs.</p>
+          <h2>Partage des données</h2>
+          <p>Aucune revente de données à des tiers.</p>
+          <h2>Traitement</h2>
+          <p>Les données du formulaire de contact sont traitées via EmailJS.</p>
+          <h2>Contact</h2>
+          <p>Pour toute question relative à vos données : <a href="mailto:contactfacilix@gmail.com">contactfacilix@gmail.com</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW: CGU -->
+  <div id="view-cgu" class="fx-view" aria-label="Vue Conditions Générales d'Utilisation">
+    <div class="view-back-bar">
+      <div class="container">
+        <button class="view-back-btn" onclick="showHome()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Retour à l'accueil
+        </button>
+      </div>
+    </div>
+    <div class="legal-section">
+      <div class="container legal-container">
+        <h1 class="legal-title">Conditions Générales d'Utilisation</h1>
+        <div class="legal-body">
+          <h2>Services</h2>
+          <p>Les services décrits sur ce site sont fournis par FaciliX.</p>
+          <h2>Abonnements et paiement</h2>
+          <ul>
+            <li>Abonnements mensuels ou annuels, sans engagement minimum.</li>
+            <li>Paiements acceptés via MonCash et NatCash.</li>
+          </ul>
+          <h2>Modification des tarifs</h2>
+          <p>FaciliX se réserve le droit de modifier ses tarifs avec un préavis de 30 jours, sauf pour les clients ayant souscrit un abonnement annuel, dont le tarif reste garanti jusqu'au terme de la période en cours.</p>
+          <h2>Résiliation</h2>
+          <p>La résiliation d'un abonnement est possible à tout moment.</p>
         </div>
       </div>
     </div>
