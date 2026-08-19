@@ -2305,6 +2305,20 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Demander une démo ShopPilot
           </a>
+
+          <div class="pricing-card shoppilot-pricing-card" style="--pricing-accent:#E8821A; text-align:left; max-width:320px; margin:32px auto 0;" data-monthly-label="Abonnement ShopPilot — 2 500 HTG/mois" data-yearly-label="Abonnement ShopPilot — 25 000 HTG/an">
+            <div class="pricing-tag">Commerce</div>
+            <h3 class="pricing-name">ShopPilot</h3>
+            <div class="pricing-toggle" role="group" aria-label="Cycle de facturation ShopPilot">
+              <button type="button" class="pricing-toggle-btn active" data-period="monthly">Mensuel</button>
+              <button type="button" class="pricing-toggle-btn" data-period="yearly">Annuel</button>
+            </div>
+            <div class="pricing-price"><span class="pricing-price-amount">2 500</span> <span class="pricing-period">HTG/mois</span></div>
+            <div class="pricing-savings-badge" hidden>Économisez 5 000 HTG</div>
+            <button type="button" class="btn-pricing shoppilot-subscribe-btn" style="background:#E8821A;">
+              S'abonner à ShopPilot
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -2352,17 +2366,22 @@
             </button>
           </div>
 
-          <div class="pricing-card" style="--pricing-accent:#E8821A;">
+          <div class="pricing-card shoppilot-pricing-card" style="--pricing-accent:#E8821A;" data-monthly-label="Abonnement ShopPilot — 2 500 HTG/mois" data-yearly-label="Abonnement ShopPilot — 25 000 HTG/an">
             <div class="pricing-tag">Commerce</div>
             <h3 class="pricing-name">ShopPilot</h3>
-            <div class="pricing-price">2 500 <span class="pricing-period">HTG/mois</span></div>
+            <div class="pricing-toggle" role="group" aria-label="Cycle de facturation ShopPilot">
+              <button type="button" class="pricing-toggle-btn active" data-period="monthly">Mensuel</button>
+              <button type="button" class="pricing-toggle-btn" data-period="yearly">Annuel</button>
+            </div>
+            <div class="pricing-price"><span class="pricing-price-amount">2 500</span> <span class="pricing-period">HTG/mois</span></div>
+            <div class="pricing-savings-badge" hidden>Économisez 5 000 HTG</div>
             <ul class="pricing-features">
               <li>Boutique en ligne personnalisée</li>
               <li>Paiement mobile intégré</li>
               <li>Gestion des stocks &amp; commandes</li>
               <li>Rapports de ventes</li>
             </ul>
-            <button type="button" class="btn-pricing" style="background:#E8821A;" onclick="subscribeTo('Abonnement ShopPilot — 2 500 HTG/mois')">
+            <button type="button" class="btn-pricing shoppilot-subscribe-btn" style="background:#E8821A;">
               S'abonner à ShopPilot
             </button>
           </div>
@@ -2852,6 +2871,7 @@
                   <option value="Abonnement SchoolPilot — 5 000 HTG/mois">Abonnement SchoolPilot — 5 000 HTG/mois</option>
                   <option value="Abonnement SchoolPilot — 50 000 HTG/an">Abonnement SchoolPilot — 50 000 HTG/an</option>
                   <option value="Abonnement ShopPilot — 2 500 HTG/mois">Abonnement ShopPilot — 2 500 HTG/mois</option>
+                  <option value="Abonnement ShopPilot — 25 000 HTG/an">Abonnement ShopPilot — 25 000 HTG/an</option>
                   <option value="Service Brand Visuals">Service Brand Visuals</option>
                   <option value="Service Video Production">Service Video Production</option>
                   <option value="Service Business Automation">Service Business Automation</option>
@@ -2953,7 +2973,7 @@
           <p>Les services décrits sur ce site sont fournis par FaciliX.</p>
           <h2>Abonnements et paiement</h2>
           <ul>
-            <li>Abonnements mensuels ou annuels, sans engagement minimum.</li>
+            <li>Tous les abonnements FaciliX (SchoolPilot et ShopPilot) sont avec engagement. Résiliation possible à tout moment, effective à la fin de la période en cours (mois ou année). Aucun remboursement sur la période en cours après activation. L'abonnement annuel garantit le tarif en vigueur jusqu'à son terme.</li>
             <li>Paiements acceptés via MonCash et NatCash.</li>
           </ul>
           <h2>Modification des tarifs</h2>
@@ -3093,6 +3113,40 @@
     }
 
     document.querySelectorAll('.schoolpilot-pricing-card').forEach(initSchoolPilotPricing);
+
+    // ─── ShopPilot pricing toggle (Mensuel / Annuel) ───
+    function initShopPilotPricing(card) {
+      const toggleBtns = card.querySelectorAll('.pricing-toggle-btn');
+      const priceAmount = card.querySelector('.pricing-price-amount');
+      const pricePeriod = card.querySelector('.pricing-period');
+      const savingsBadge = card.querySelector('.pricing-savings-badge');
+      const subscribeBtn = card.querySelector('.shoppilot-subscribe-btn');
+
+      toggleBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          toggleBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          if (btn.dataset.period === 'yearly') {
+            priceAmount.textContent = '25 000';
+            pricePeriod.textContent = 'HTG/an';
+            savingsBadge.hidden = false;
+          } else {
+            priceAmount.textContent = '2 500';
+            pricePeriod.textContent = 'HTG/mois';
+            savingsBadge.hidden = true;
+          }
+        });
+      });
+
+      subscribeBtn.addEventListener('click', () => {
+        const active = card.querySelector('.pricing-toggle-btn.active');
+        const period = active ? active.dataset.period : 'monthly';
+        const label = period === 'yearly' ? card.dataset.yearlyLabel : card.dataset.monthlyLabel;
+        subscribeTo(label);
+      });
+    }
+
+    document.querySelectorAll('.shoppilot-pricing-card').forEach(initShopPilotPricing);
 
     function showHome() {
       HOME_SECTIONS.forEach(s => { document.getElementById(s).style.display = ''; });
