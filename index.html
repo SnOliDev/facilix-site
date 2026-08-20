@@ -1010,6 +1010,92 @@
 
     .legal-body a { color: var(--brand); font-weight: 600; }
 
+    /* ─── SHOPPILOT SCREENSHOTS CAROUSEL ─── */
+    .sp-shots-section {
+      padding: 80px 0;
+      background: #1A1A2E;
+    }
+
+    .sp-shots-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .sp-shots-carousel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      max-width: 620px;
+      margin-inline: auto;
+    }
+
+    .sp-shots-arrow {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      background: #E8821A;
+      color: #fff;
+      font-size: 1.2rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform var(--transition), filter var(--transition);
+    }
+
+    .sp-shots-arrow:hover { transform: scale(1.08); filter: brightness(1.1); }
+
+    .sp-shots-track {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: min(500px, calc(100vw - 172px));
+      overflow: hidden;
+    }
+
+    .sp-shot {
+      grid-area: 1 / 1;
+      width: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(.94);
+      transition: transform .4s ease, opacity .4s ease;
+      text-align: center;
+    }
+
+    .sp-shot.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    .sp-shot img {
+      max-width: 100%;
+      max-height: 500px;
+      object-fit: contain;
+      border-radius: 12px;
+      display: block;
+      margin-inline: auto;
+    }
+
+    .sp-shot figcaption {
+      margin-top: 14px;
+      font-size: .9rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.75);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sp-shot { transition: none; }
+    }
+
     /* ─── WHATSAPP FLOAT ─── */
     .whatsapp-float {
       position: fixed;
@@ -2296,6 +2382,57 @@
         </div>
       </div>
     </div>
+    <div class="sp-shots-section">
+      <div class="container">
+        <h2 class="sp-shots-title">Aperçu de l'application</h2>
+        <div class="sp-shots-carousel">
+          <button class="sp-shots-arrow sp-shots-prev" onclick="spShotsMove(-1)" aria-label="Capture précédente">&#8592;</button>
+          <div class="sp-shots-track">
+            <figure class="sp-shot">
+              <img src="images/shoppilot/sp-accueil.jpg" alt="ShopPilot — Accueil" loading="lazy">
+              <figcaption>Accueil</figcaption>
+            </figure>
+            <figure class="sp-shot">
+              <img src="images/shoppilot/sp-02.jpg" alt="ShopPilot — Aperçu de l'application" loading="lazy">
+              <figcaption>Aperçu de l'application</figcaption>
+            </figure>
+            <figure class="sp-shot">
+              <img src="images/shoppilot/sp-rapport-ventes.jpg" alt="ShopPilot — Rapport de ventes" loading="lazy">
+              <figcaption>Rapport de ventes</figcaption>
+            </figure>
+            <figure class="sp-shot">
+              <img src="images/shoppilot/sp-filtrage-ventes.jpg" alt="ShopPilot — Filtrage du rapport de ventes" loading="lazy">
+              <figcaption>Filtrage du rapport de ventes</figcaption>
+            </figure>
+            <figure class="sp-shot">
+              <img src="images/shoppilot/sp-stocks-sommaire.jpg" alt="ShopPilot — Sommaire du rapport de stocks" loading="lazy">
+              <figcaption>Sommaire du rapport de stocks</figcaption>
+            </figure>
+            <figure class="sp-shot">
+              <img src="images/shoppilot/sp-stocks-detail.jpg" alt="ShopPilot — Rapport de stock détaillé" loading="lazy">
+              <figcaption>Rapport de stock détaillé</figcaption>
+            </figure>
+            <figure class="sp-shot">
+              <img src="images/shoppilot/sp-transactions.jpg" alt="ShopPilot — Transactions" loading="lazy">
+              <figcaption>Transactions</figcaption>
+            </figure>
+            <figure class="sp-shot">
+              <img src="images/shoppilot/sp-flux.jpg" alt="ShopPilot — Flux et résultats" loading="lazy">
+              <figcaption>Flux et résultats</figcaption>
+            </figure>
+            <figure class="sp-shot">
+              <img src="images/shoppilot/sp-depenses.jpg" alt="ShopPilot — Dépenses" loading="lazy">
+              <figcaption>Dépenses</figcaption>
+            </figure>
+            <figure class="sp-shot">
+              <img src="images/shoppilot/sp-parametres.jpg" alt="ShopPilot — Paramètres" loading="lazy">
+              <figcaption>Paramètres</figcaption>
+            </figure>
+          </div>
+          <button class="sp-shots-arrow sp-shots-next" onclick="spShotsMove(1)" aria-label="Capture suivante">&#8594;</button>
+        </div>
+      </div>
+    </div>
     <div class="view-cta-section">
       <div class="container">
         <div class="view-cta-inner">
@@ -3013,6 +3150,27 @@
       svcCarousel.addEventListener('mouseenter', () => clearInterval(svcTimer));
       svcCarousel.addEventListener('mouseleave', () => {
         svcTimer = setInterval(() => svcMove(1), 3000);
+      });
+    }
+
+    // ─── ShopPilot screenshots carousel ───
+    let spShotsIndex = 0;
+    const spShots = document.querySelectorAll('.sp-shots-track .sp-shot');
+    let spShotsTimer = setInterval(() => spShotsMove(1), 4000);
+
+    function spShotsMove(dir) {
+      spShotsIndex = (spShotsIndex + dir + spShots.length) % spShots.length;
+      spShots.forEach((s, i) => s.classList.toggle('active', i === spShotsIndex));
+      clearInterval(spShotsTimer);
+      spShotsTimer = setInterval(() => spShotsMove(1), 4000);
+    }
+    if (spShots.length) { spShots[0].classList.add('active'); }
+
+    const spShotsCarousel = document.querySelector('.sp-shots-carousel');
+    if (spShotsCarousel) {
+      spShotsCarousel.addEventListener('mouseenter', () => clearInterval(spShotsTimer));
+      spShotsCarousel.addEventListener('mouseleave', () => {
+        spShotsTimer = setInterval(() => spShotsMove(1), 4000);
       });
     }
 
