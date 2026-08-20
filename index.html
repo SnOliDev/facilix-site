@@ -1718,25 +1718,6 @@
 
       <div class="products-grid">
 
-        <!-- ClassPilot -->
-        <article class="product-card product-card-disabled" data-color="classpilot" aria-label="ClassPilot">
-          <div class="product-icon-wrap">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
-            </svg>
-          </div>
-          <span class="product-tag">E-Learning</span>
-          <h3 class="product-name">ClassPilot</h3>
-          <p class="product-desc">Plateforme e-learning multi-tenant pour écoles et universités — cours en ligne, sessions vidéo, gestion des rôles enseignant et étudiant.</p>
-          <ul class="product-features">
-            <li>Cours en ligne &amp; vidéo</li>
-            <li>Espace étudiant &amp; enseignant</li>
-            <li>Devoirs &amp; soumissions</li>
-            <li>PWA + Android</li>
-          </ul>
-          <div class="badge-coming-soon">Bientôt disponible — Gratuit pour les abonnés SchoolPilot</div>
-        </article>
-
         <!-- SchoolPilot -->
         <article class="product-card" data-color="schoolpilot" aria-label="SchoolPilot">
           <div class="product-icon-wrap">
@@ -1780,6 +1761,25 @@
             En savoir plus
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
+        </article>
+
+        <!-- ClassPilot -->
+        <article class="product-card product-card-disabled" data-color="classpilot" aria-label="ClassPilot">
+          <div class="product-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+          </div>
+          <span class="product-tag">E-Learning</span>
+          <h3 class="product-name">ClassPilot</h3>
+          <p class="product-desc">Plateforme e-learning multi-tenant pour écoles et universités — cours en ligne, sessions vidéo, gestion des rôles enseignant et étudiant.</p>
+          <ul class="product-features">
+            <li>Cours en ligne &amp; vidéo</li>
+            <li>Espace étudiant &amp; enseignant</li>
+            <li>Devoirs &amp; soumissions</li>
+            <li>PWA + Android</li>
+          </ul>
+          <div class="badge-coming-soon">Bientôt disponible — Gratuit pour les abonnés SchoolPilot</div>
         </article>
 
 
@@ -3055,6 +3055,7 @@
 
     // ─── View system ───
     const HOME_SECTIONS = ['hero', 'products', 'services', 'why', 'cta'];
+    let isPopStateNavigation = false;
 
     function showView(id) {
       HOME_SECTIONS.forEach(s => { document.getElementById(s).style.display = 'none'; });
@@ -3062,6 +3063,9 @@
       const view = document.getElementById('view-' + id);
       if (view) { view.style.display = 'block'; }
       window.scrollTo({ top: 0, behavior: 'instant' });
+      if (!isPopStateNavigation) {
+        history.pushState({ view: id }, '', '#' + id);
+      }
     }
 
     function navigateTo(sectionId) {
@@ -3152,7 +3156,21 @@
       HOME_SECTIONS.forEach(s => { document.getElementById(s).style.display = ''; });
       document.querySelectorAll('.fx-view').forEach(v => { v.style.display = 'none'; });
       window.scrollTo({ top: 0, behavior: 'instant' });
+      if (!isPopStateNavigation) {
+        history.pushState({ view: 'home' }, '', '#');
+      }
     }
+
+    window.addEventListener('popstate', (e) => {
+      isPopStateNavigation = true;
+      const view = e.state && e.state.view;
+      if (view && view !== 'home') {
+        showView(view);
+      } else {
+        showHome();
+      }
+      isPopStateNavigation = false;
+    });
 
     // ─── EmailJS ───
     emailjs.init('e82Vosp-T8cG0IxRb');
