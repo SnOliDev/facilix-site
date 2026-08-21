@@ -305,6 +305,53 @@
       mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
     }
 
+    .hero-slideshow {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity .9s ease;
+    }
+
+    .hero-slide.hero-slide-active { opacity: 1; }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: rgba(0,0,0,.22);
+      pointer-events: none;
+    }
+
+    .hero-text-fade { transition: opacity .5s ease; }
+
+    .hero-text-fade.hero-text-hidden { opacity: 0; }
+
+    .hero-dots {
+      display: flex;
+      gap: 10px;
+      margin-top: 44px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Reuse .svc-dot pattern (coverflow), adapted for the hero's dark background */
+    .hero-dots .svc-dot { background: rgba(255,255,255,.35); }
+    .hero-dots .svc-dot:hover { background: rgba(255,255,255,.55); }
+    .hero-dots .svc-dot.active { background: #fff; }
+    .hero-dots .svc-dot:focus-visible { outline-color: #fff; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-slide { transition: none; }
+      .hero-text-fade { transition: none; }
+    }
+
     .hero-inner {
       position: relative;
       z-index: 1;
@@ -629,7 +676,7 @@
       align-items: center;
       justify-content: center;
       gap: 18px;
-      max-width: 460px;
+      max-width: 720px;
       margin-inline: auto;
     }
 
@@ -652,36 +699,34 @@
 
     .svc-arrow:hover { transform: scale(1.08); filter: brightness(1.15); }
 
-    .svc-track {
+    .svc-arrow:focus-visible {
+      outline: 2px solid #1A3C5E;
+      outline-offset: 3px;
+    }
+
+    .svc-stage {
       position: relative;
-      display: grid;
-      place-items: center;
-      width: min(320px, calc(100vw - 172px));
-      overflow: hidden;
+      flex: 1;
+      min-width: 0;
+      height: 420px;
+      perspective: 1300px;
+      overflow: visible;
     }
 
     .service-card {
-      grid-area: 1 / 1;
-      width: min(320px, calc(100vw - 172px));
-      margin-inline: auto;
-      opacity: 0;
-      pointer-events: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(300px, calc(100vw - 220px));
+      margin: 0;
       border-radius: var(--radius);
       padding: 30px 26px;
       border: 1.5px solid var(--border);
       background: #fff;
-      box-shadow: var(--shadow-sm);
-      cursor: default;
-      transition: transform .4s ease, opacity .4s ease, box-shadow var(--transition), background var(--transition), border-color var(--transition);
-      transform: scale(.92);
-      position: relative;
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
       overflow: hidden;
-    }
-
-    .service-card.active {
-      opacity: 1;
-      pointer-events: auto;
-      transform: scale(1);
+      transition: transform .4s ease, opacity .4s ease, box-shadow var(--transition), background var(--transition), border-color var(--transition);
     }
 
     .service-card[data-color="brand-vis"]  { --svc-color: var(--brand-vis); }
@@ -690,18 +735,27 @@
     .service-card[data-color="webdev"]     { --svc-color: var(--webdev); }
     .service-card[data-color="boost"]      { --svc-color: var(--boost); }
 
-    .service-card:hover {
-      transform: translateY(-5px);
+    .service-card.svc-card-center {
+      cursor: default;
       box-shadow: var(--shadow-lg);
+    }
+
+    .service-card:not(.svc-card-center):hover {
+      border-color: var(--svc-color);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .service-card.svc-card-center:hover {
       background: var(--svc-color);
       border-color: var(--svc-color);
     }
 
-    .service-card:hover .service-icon-bg { background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.3); }
-    .service-card:hover .service-icon-bg svg { color: #fff; }
-    .service-card:hover .service-name { color: #fff; }
-    .service-card:hover .service-desc { color: rgba(255,255,255,.8); }
-    .service-card:hover .service-tag { background: rgba(255,255,255,.2); color: #fff; }
+    .service-card.svc-card-center:hover .service-icon-bg { background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.3); }
+    .service-card.svc-card-center:hover .service-icon-bg svg { color: #fff; }
+    .service-card.svc-card-center:hover .service-name { color: #fff; }
+    .service-card.svc-card-center:hover .service-desc { color: rgba(255,255,255,.8); }
+    .service-card.svc-card-center:hover .service-tag { background: rgba(255,255,255,.2); color: #fff; }
+    .service-card.svc-card-center:hover .service-link { color: rgba(255,255,255,.92); }
 
     .service-icon-bg {
       width: 50px;
@@ -749,6 +803,96 @@
       color: var(--muted);
       line-height: 1.6;
       transition: color var(--transition);
+    }
+
+    .svc-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .svc-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: none;
+      padding: 0;
+      background: var(--border);
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+    }
+
+    .svc-dot:hover { transform: scale(1.2); }
+
+    .svc-dot.active {
+      background: #1A3C5E;
+      transform: scale(1.3);
+    }
+
+    .svc-dot:focus-visible {
+      outline: 2px solid #1A3C5E;
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 768px) {
+      .svc-stage { height: 460px; }
+    }
+
+    @media (max-width: 480px) {
+      .svc-carousel { gap: 10px; }
+      .svc-arrow { width: 38px; height: 38px; font-size: 1rem; }
+      .service-card { width: min(230px, calc(100vw - 120px)); padding: 24px 20px; }
+      .svc-stage { height: 480px; perspective: 900px; }
+    }
+
+    .svc-more-cta {
+      text-align: center;
+      margin-top: 36px;
+    }
+
+    /* ─── ALL SERVICES VIEW ─── */
+    .all-services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .all-svc-card {
+      border-radius: var(--radius);
+      padding: 30px 26px;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition), border-color var(--transition);
+    }
+
+    .all-svc-card[data-color="brand-vis"]  { --svc-color: var(--brand-vis); }
+    .all-svc-card[data-color="video"]      { --svc-color: var(--video); }
+    .all-svc-card[data-color="automation"] { --svc-color: var(--automation); }
+    .all-svc-card[data-color="webdev"]     { --svc-color: var(--webdev); }
+    .all-svc-card[data-color="boost"]      { --svc-color: var(--boost); }
+
+    .all-svc-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      background: var(--svc-color);
+      border-color: var(--svc-color);
+    }
+
+    .all-svc-card:hover .service-icon-bg { background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.3); }
+    .all-svc-card:hover .service-icon-bg svg { color: #fff; }
+    .all-svc-card:hover .service-name { color: #fff; }
+    .all-svc-card:hover .service-desc { color: rgba(255,255,255,.8); }
+    .all-svc-card:hover .service-tag { background: rgba(255,255,255,.2); color: #fff; }
+    .all-svc-card:hover .service-link { color: rgba(255,255,255,.92); }
+
+    @media (max-width: 1024px) {
+      .all-services-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .all-services-grid { grid-template-columns: 1fr; }
     }
 
     /* ─── WHY ─── */
@@ -799,6 +943,63 @@
       font-size: .9rem;
       color: rgba(255,255,255,.85);
       line-height: 1.7;
+    }
+
+    .why-more-cta {
+      text-align: center;
+      margin-top: 36px;
+    }
+
+    /* ─── WHY VIEW (developed arguments) ─── */
+    .why-detail-list {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .why-detail-row {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .why-detail-row-reverse { flex-direction: row-reverse; }
+
+    .why-detail-icon {
+      flex-shrink: 0;
+      width: 96px;
+      height: 96px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-md);
+    }
+
+    .why-detail-icon svg { width: 44px; height: 44px; color: #fff; }
+
+    .why-detail-text h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .why-detail-text p {
+      font-size: .95rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .why-detail-cta { text-align: center; }
+
+    @media (max-width: 768px) {
+      .why-detail-row, .why-detail-row-reverse {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+      }
     }
 
     /* ─── FINAL CTA ─── */
@@ -1356,6 +1557,11 @@
       filter: brightness(1.08);
     }
 
+    .btn-view-cta:focus-visible {
+      outline: 2px solid #1A3C5E;
+      outline-offset: 3px;
+    }
+
     .view-also {
       margin-top: 20px;
       font-size: .85rem;
@@ -1394,7 +1600,6 @@
       transition: gap var(--transition), color var(--transition);
     }
 
-    .service-card:hover .service-link { color: rgba(255,255,255,.92); }
     .service-link:hover { gap: 10px; }
 
     @media (max-width: 768px) {
@@ -1744,23 +1949,25 @@
 
   <!-- ═══════════════════════════════════════════════════════ HERO -->
   <section id="hero" aria-labelledby="hero-heading">
+    <div class="hero-slideshow" aria-hidden="true">
+      <div class="hero-slide hero-slide-active" style="background:linear-gradient(160deg, var(--brand-dark) 0%, var(--brand) 55%, #1E5E8E 100%);"></div>
+      <div class="hero-slide" style="background:linear-gradient(160deg,#0D2136 0%,#1A3C5E 55%,#234E7A 100%);"></div>
+      <div class="hero-slide" style="background:linear-gradient(160deg,#7C2D12 0%,#E8821A 55%,#F59E0B 100%);"></div>
+    </div>
+    <div class="hero-overlay" aria-hidden="true"></div>
     <div class="container">
       <div class="hero-inner">
         <div class="hero-content">
-          <div class="hero-badge">Plateforme SaaS tout-en-un</div>
+          <div class="hero-badge"><span data-hero="badge" class="hero-text-fade">Plateforme SaaS tout-en-un</span></div>
 
-          <h1 class="hero-title" id="hero-heading">
-            <span class="accent">Simplify</span><br />Everything.
-          </h1>
+          <h1 class="hero-title" id="hero-heading"><span data-hero="title" class="hero-text-fade"><span class="accent">Simplify</span><br />Everything.</span></h1>
 
-          <p class="hero-sub">
-            FaciliX réunit tous les outils dont votre entreprise a besoin — gestion scolaire, e-commerce, marketing et plus — dans un seul écosystème intégré.
-          </p>
+          <p class="hero-sub"><span data-hero="sub" class="hero-text-fade">FaciliX réunit tous les outils dont votre entreprise a besoin — gestion scolaire, e-commerce, marketing et plus — dans un seul écosystème intégré.</span></p>
 
           <div class="hero-actions">
-            <a href="#" class="btn-primary" onclick="showView('contact'); return false;">
+            <a href="#" class="btn-primary" id="heroCta" data-target="contact">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              Demander une démo
+              <span id="heroCtaLabel" class="hero-text-fade">Demander une démo</span>
             </a>
             <a href="#products" class="btn-ghost">
               Découvrir les produits
@@ -1778,6 +1985,12 @@
             <div class="stat-label">Services métier</div>
           </div>
         </div>
+      </div>
+
+      <div class="hero-dots" aria-label="Navigation slideshow hero">
+        <button class="svc-dot active" aria-label="Aller au slide 1 : FaciliX"></button>
+        <button class="svc-dot" aria-label="Aller au slide 2 : SchoolPilot"></button>
+        <button class="svc-dot" aria-label="Aller au slide 3 : ShopPilot"></button>
       </div>
     </div>
   </section>
@@ -1873,7 +2086,7 @@
 
       <div class="svc-carousel">
         <button class="svc-arrow svc-prev" onclick="svcMove(-1)" aria-label="Service précédent">&#8592;</button>
-        <div class="svc-track">
+        <div class="svc-stage">
 
           <!-- Brand Visuals -->
           <article class="service-card" data-color="brand-vis" aria-label="Brand Visuals">
@@ -1959,6 +2172,21 @@
         </div>
         <button class="svc-arrow svc-next" onclick="svcMove(1)" aria-label="Service suivant">&#8594;</button>
       </div>
+
+      <div class="svc-dots" aria-label="Navigation services">
+        <button class="svc-dot" aria-label="Aller à Brand Visuals"></button>
+        <button class="svc-dot" aria-label="Aller à Video Production"></button>
+        <button class="svc-dot" aria-label="Aller à Business Automation"></button>
+        <button class="svc-dot" aria-label="Aller à Web Dev"></button>
+        <button class="svc-dot" aria-label="Aller à Boost"></button>
+      </div>
+
+      <div class="svc-more-cta">
+        <button type="button" class="btn-view-cta" style="background:#1A3C5E;" onclick="showView('all-services')" aria-label="Voir tous nos services en grille">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Voir tous nos services
+        </button>
+      </div>
     </div>
   </section>
 
@@ -2026,6 +2254,13 @@
           <p class="why-desc">Pas de bot, pas de ticket sans réponse. Une équipe disponible, qui parle votre langue et connaît votre réalité.</p>
         </article>
 
+      </div>
+
+      <div class="why-more-cta">
+        <button type="button" class="btn-view-cta" style="background:#1A3C5E;" onclick="showView('why')" aria-label="En savoir plus sur pourquoi choisir FaciliX">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          En savoir plus
+        </button>
       </div>
     </div>
   </section>
@@ -2977,6 +3212,197 @@
     </div>
   </div>
 
+  <!-- VIEW: Tous les services -->
+  <div id="view-all-services" class="fx-view" aria-label="Vue Tous les services">
+    <div class="view-back-bar">
+      <div class="container">
+        <button class="view-back-btn" onclick="showHome()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Retour à l'accueil
+        </button>
+      </div>
+    </div>
+    <div class="view-features-section">
+      <div class="container">
+        <h2 class="view-features-title">Tous nos services</h2>
+        <div class="all-services-grid">
+
+          <!-- Brand Visuals -->
+          <article class="all-svc-card" data-color="brand-vis" aria-label="Brand Visuals">
+            <div class="service-icon-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <span class="service-tag">Identité</span>
+            <h3 class="service-name">Brand Visuals</h3>
+            <p class="service-desc">Création d'identité visuelle complète : logo, charte graphique, supports de communication, et brand book.</p>
+            <button class="service-link" onclick="showView('brandvis')">
+              En savoir plus
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </article>
+
+          <!-- Video Production -->
+          <article class="all-svc-card" data-color="video" aria-label="Video Production">
+            <div class="service-icon-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+              </svg>
+            </div>
+            <span class="service-tag">Contenu</span>
+            <h3 class="service-name">Video Production</h3>
+            <p class="service-desc">Tournage, montage et post-production pour vos publicités, présentations corporate et réseaux sociaux.</p>
+            <button class="service-link" onclick="showView('video')">
+              En savoir plus
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </article>
+
+          <!-- Business Automation -->
+          <article class="all-svc-card" data-color="automation" aria-label="Business Automation">
+            <div class="service-icon-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 1.41 13.44M4.93 4.93A10 10 0 0 0 3.52 18.37"/>
+                <path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
+              </svg>
+            </div>
+            <span class="service-tag">Efficacité</span>
+            <h3 class="service-name">Business Automation</h3>
+            <p class="service-desc">Automatisation de vos processus métier : facturation, relances, workflows internes, intégrations API.</p>
+            <button class="service-link" onclick="showView('automation')">
+              En savoir plus
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </article>
+
+          <!-- Web Dev -->
+          <article class="all-svc-card" data-color="webdev" aria-label="Web Dev">
+            <div class="service-icon-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+              </svg>
+            </div>
+            <span class="service-tag">Digital</span>
+            <h3 class="service-name">Web Dev</h3>
+            <p class="service-desc">Conception et développement de sites web et applications web sur-mesure, performants et optimisés SEO.</p>
+            <button class="service-link" onclick="showView('webdev')">
+              En savoir plus
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </article>
+
+          <!-- Boost -->
+          <article class="all-svc-card" data-color="boost" aria-label="Boost">
+            <div class="service-icon-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+              </svg>
+            </div>
+            <span class="service-tag">Croissance</span>
+            <h3 class="service-name">Boost</h3>
+            <p class="service-desc">Stratégie digitale, campagnes ciblées et reporting mensuel — votre partenaire de croissance en ligne.</p>
+            <button class="service-link" onclick="showView('boost')">
+              En savoir plus
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </article>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW: Pourquoi FaciliX -->
+  <div id="view-why" class="fx-view" aria-label="Vue Pourquoi FaciliX">
+    <div class="view-back-bar">
+      <div class="container">
+        <button class="view-back-btn" onclick="showHome()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Retour à l'accueil
+        </button>
+      </div>
+    </div>
+    <div class="view-features-section">
+      <div class="container">
+        <h2 class="view-features-title">Pourquoi choisir FaciliX ?</h2>
+        <div class="why-detail-list">
+
+          <div class="why-detail-row">
+            <div class="why-detail-icon" style="background:linear-gradient(135deg,#1A3C5E 0%,#2D9E6B 100%);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+              </svg>
+            </div>
+            <div class="why-detail-text">
+              <h3>Né du terrain</h3>
+              <p>Les grandes plateformes internationales ont rarement pensé aux réalités des petites structures francophones : connexions instables, budgets serrés, besoins très spécifiques. FaciliX est né de ce constat, conçu par des gens qui ont vécu ces contraintes de l'intérieur. Chaque fonctionnalité répond à un problème réel, pas à une hypothèse de laboratoire.</p>
+            </div>
+          </div>
+
+          <div class="why-detail-row why-detail-row-reverse">
+            <div class="why-detail-icon" style="background:linear-gradient(135deg,#1A3C5E 0%,#E8821A 100%);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20.5 11H19V7a2 2 0 0 0-2-2h-4V3.5a2.5 2.5 0 0 0-5 0V5H4a2 2 0 0 0-2 2v3.8h1.5a2.7 2.7 0 0 1 0 5.4H2V20a2 2 0 0 0 2 2h3.8v-1.5a2.7 2.7 0 0 1 5.4 0V22H17a2 2 0 0 0 2-2v-4h1.5a2.5 2.5 0 0 0 0-5z"/>
+              </svg>
+            </div>
+            <div class="why-detail-text">
+              <h3>Écosystème intégré</h3>
+              <p>Trop d'organisations jonglent entre plusieurs logiciels qui ne se parlent pas, au prix de doubles saisies et d'erreurs évitables. Avec FaciliX, un seul compte donne accès à tous vos outils — gestion scolaire, commerce, marketing — qui partagent leurs données en temps réel. Vous gagnez en clarté sans multiplier les abonnements.</p>
+            </div>
+          </div>
+
+          <div class="why-detail-row">
+            <div class="why-detail-icon" style="background:linear-gradient(135deg,#1A3C5E 0%,#E83A2D 100%);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </div>
+            <div class="why-detail-text">
+              <h3>À votre écoute</h3>
+              <p>Passer au numérique peut être intimidant, surtout quand les outils sont pensés pour de grandes entreprises avec des équipes IT dédiées. Nous accompagnons chaque étape de votre transition, à votre rythme, avec des explications simples et sans jargon technique. Votre réussite avec l'outil compte autant que la vente elle-même.</p>
+            </div>
+          </div>
+
+          <div class="why-detail-row why-detail-row-reverse">
+            <div class="why-detail-icon" style="background:linear-gradient(135deg,#1A3C5E 0%,#D63384 100%);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <rect x="9.5" y="11" width="5" height="4" rx="1"/>
+                <path d="M10.5 11V9.5a1.5 1.5 0 0 1 3 0V11"/>
+              </svg>
+            </div>
+            <div class="why-detail-text">
+              <h3>Vos données, uniquement les vôtres</h3>
+              <p>Vos élèves, vos clients, vos chiffres d'affaires : ces informations sont sensibles, et nous les traitons comme telles. Aucune donnée n'est revendue, partagée avec des tiers ou utilisée à des fins publicitaires. Vous gardez un contrôle total sur ce qui vous appartient, sans conditions cachées dans les petits caractères.</p>
+            </div>
+          </div>
+
+          <div class="why-detail-row">
+            <div class="why-detail-icon" style="background:linear-gradient(135deg,#1A3C5E 0%,#0AABBD 100%);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+                <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+              </svg>
+            </div>
+            <div class="why-detail-text">
+              <h3>Un support qui vous comprend</h3>
+              <p>Quand un problème survient, vous voulez parler à quelqu'un qui comprend immédiatement votre contexte — pas naviguer dans un menu automatisé pendant vingt minutes. Notre équipe répond directement, dans votre langue, avec une vraie connaissance de votre secteur d'activité. Un abonnement abordable ne devrait jamais rimer avec support au rabais.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="why-detail-cta">
+          <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#1A3C5E;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Parlons de votre projet
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- VIEW: Contact -->
   <div id="view-contact" class="fx-view" aria-label="Vue Contact">
     <div class="view-back-bar">
@@ -3141,24 +3567,208 @@
     // ─── Footer year ───
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // ─── Services carousel ───
-    let svcIndex = 0;
-    const svcCards = document.querySelectorAll('.svc-track .service-card');
-    let svcTimer = setInterval(() => svcMove(1), 3000);
+    // ─── Hero slideshow ───
+    const HERO_SLIDES = [
+      {
+        badge: 'Plateforme SaaS tout-en-un',
+        titleHTML: '<span class="accent">Simplify</span><br>Everything.',
+        sub: 'FaciliX réunit tous les outils dont votre entreprise a besoin — gestion scolaire, e-commerce, marketing et plus — dans un seul écosystème intégré.',
+        ctaLabel: 'Demander une démo',
+        ctaTarget: 'contact'
+      },
+      {
+        badge: 'Gestion scolaire simplifiée',
+        titleHTML: 'Gérez votre école,<br>en un seul outil.',
+        sub: 'Classes, élèves, bulletins, écolage et payroll : SchoolPilot centralise toute la gestion de votre établissement.',
+        ctaLabel: 'Découvrir SchoolPilot',
+        ctaTarget: 'schoolpilot'
+      },
+      {
+        badge: 'Point de vente & commerce',
+        titleHTML: 'Votre commerce,<br>sous contrôle.',
+        sub: 'Caisse, inventaire et paiement mobile : ShopPilot fait tourner votre commerce, même hors ligne.',
+        ctaLabel: 'Découvrir ShopPilot',
+        ctaTarget: 'shoppilot'
+      }
+    ];
 
-    function svcMove(dir) {
-      svcIndex = (svcIndex + dir + svcCards.length) % svcCards.length;
-      svcCards.forEach((c, i) => c.classList.toggle('active', i === svcIndex));
+    let heroIndex = 0;
+    let heroTimer;
+    const heroReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const heroSlideEls = Array.from(document.querySelectorAll('.hero-slide'));
+    const heroDots = Array.from(document.querySelectorAll('.hero-dots .svc-dot'));
+    const heroBadgeEl = document.querySelector('[data-hero="badge"]');
+    const heroTitleEl = document.querySelector('[data-hero="title"]');
+    const heroSubEl = document.querySelector('[data-hero="sub"]');
+    const heroCtaEl = document.getElementById('heroCta');
+    const heroCtaLabelEl = document.getElementById('heroCtaLabel');
+    const heroTextEls = [heroBadgeEl, heroTitleEl, heroSubEl, heroCtaLabelEl].filter(Boolean);
+
+    function heroApplySlide(i) {
+      const slide = HERO_SLIDES[i];
+      if (heroBadgeEl) heroBadgeEl.textContent = slide.badge;
+      if (heroTitleEl) heroTitleEl.innerHTML = slide.titleHTML;
+      if (heroSubEl) heroSubEl.textContent = slide.sub;
+      if (heroCtaLabelEl) heroCtaLabelEl.textContent = slide.ctaLabel;
+      if (heroCtaEl) heroCtaEl.dataset.target = slide.ctaTarget;
+    }
+
+    function heroGoTo(i) {
+      const n = heroSlideEls.length;
+      if (!n) return;
+      heroIndex = ((i % n) + n) % n;
+
+      heroSlideEls.forEach((el, idx) => el.classList.toggle('hero-slide-active', idx === heroIndex));
+      heroDots.forEach((dot, idx) => dot.classList.toggle('active', idx === heroIndex));
+
+      if (heroReducedMotion) {
+        heroApplySlide(heroIndex);
+        return;
+      }
+
+      heroTextEls.forEach(el => el.classList.add('hero-text-hidden'));
+      setTimeout(() => {
+        heroApplySlide(heroIndex);
+        heroTextEls.forEach(el => el.classList.remove('hero-text-hidden'));
+      }, 100);
+    }
+
+    function heroRestartTimer() {
+      clearInterval(heroTimer);
+      if (heroReducedMotion) return;
+      heroTimer = setInterval(() => heroGoTo(heroIndex + 1), 6000);
+    }
+
+    if (heroSlideEls.length) {
+      heroDots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          heroGoTo(i);
+          heroRestartTimer();
+        });
+      });
+
+      if (heroCtaEl) {
+        heroCtaEl.addEventListener('click', (e) => {
+          e.preventDefault();
+          showView(heroCtaEl.dataset.target);
+        });
+      }
+
+      const heroSection = document.getElementById('hero');
+      if (heroSection) {
+        heroSection.addEventListener('mouseenter', () => clearInterval(heroTimer));
+        heroSection.addEventListener('mouseleave', heroRestartTimer);
+      }
+
+      heroRestartTimer();
+    }
+
+    // ─── Services coverflow ───
+    let svcIndex = 0;
+    const svcCards = Array.from(document.querySelectorAll('.svc-stage .service-card'));
+    const svcDots = Array.from(document.querySelectorAll('.svc-dot'));
+    let svcTimer;
+
+    const SVC_LEVELS_DESKTOP = [
+      { scale: 1,    opacity: 1,    x: 0,   rotate: 0,  z: 5 },
+      { scale: 0.75, opacity: 0.6,  x: 130, rotate: 32, z: 3 },
+      { scale: 0.55, opacity: 0.3,  x: 220, rotate: 42, z: 1 }
+    ];
+    const SVC_LEVELS_MOBILE = [
+      { scale: 1,    opacity: 1,    x: 0,  rotate: 0,  z: 5 },
+      { scale: 0.85, opacity: 0.7,  x: 60, rotate: 16, z: 3 },
+      { scale: 0.7,  opacity: 0.45, x: 95, rotate: 22, z: 1 }
+    ];
+
+    function svcDistance(i) {
+      const n = svcCards.length;
+      let d = i - svcIndex;
+      if (d > n / 2) d -= n;
+      if (d < -n / 2) d += n;
+      return d;
+    }
+
+    function svcUpdate() {
+      const isMobile = window.matchMedia('(max-width: 480px)').matches;
+      const levels = isMobile ? SVC_LEVELS_MOBILE : SVC_LEVELS_DESKTOP;
+
+      svcCards.forEach((card, i) => {
+        const d = svcDistance(i);
+        const level = levels[Math.min(Math.abs(d), levels.length - 1)];
+        const sign = d < 0 ? -1 : 1;
+        const x = d === 0 ? 0 : sign * level.x;
+        const rotate = d === 0 ? 0 : -sign * level.rotate;
+        card.style.transform = `translate(calc(-50% + ${x}px), -50%) rotateY(${rotate}deg) scale(${level.scale})`;
+        card.style.opacity = level.opacity;
+        card.style.zIndex = level.z;
+        card.classList.toggle('svc-card-center', d === 0);
+      });
+
+      svcDots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === svcIndex);
+        if (i === svcIndex) { dot.setAttribute('aria-current', 'true'); }
+        else { dot.removeAttribute('aria-current'); }
+      });
+    }
+
+    function svcRestartTimer() {
       clearInterval(svcTimer);
       svcTimer = setInterval(() => svcMove(1), 3000);
     }
-    svcCards[0].classList.add('active');
+
+    function svcGoTo(index) {
+      const n = svcCards.length;
+      svcIndex = ((index % n) + n) % n;
+      svcUpdate();
+      svcRestartTimer();
+    }
+
+    function svcMove(dir) {
+      svcGoTo(svcIndex + dir);
+    }
+
+    svcCards.forEach((card, i) => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.service-link')) return;
+        if (i !== svcIndex) { svcGoTo(i); }
+      });
+    });
+
+    svcDots.forEach((dot, i) => {
+      dot.addEventListener('click', () => svcGoTo(i));
+    });
+
+    svcUpdate();
+    svcRestartTimer();
 
     const svcCarousel = document.querySelector('.svc-carousel');
     if (svcCarousel) {
       svcCarousel.addEventListener('mouseenter', () => clearInterval(svcTimer));
-      svcCarousel.addEventListener('mouseleave', () => {
-        svcTimer = setInterval(() => svcMove(1), 3000);
+      svcCarousel.addEventListener('mouseleave', svcRestartTimer);
+    }
+
+    window.addEventListener('resize', svcUpdate);
+
+    const svcStage = document.querySelector('.svc-stage');
+    if (svcStage) {
+      let svcTouchStartX = null;
+      let svcTouchCurrentX = null;
+
+      svcStage.addEventListener('touchstart', (e) => {
+        svcTouchStartX = e.touches[0].clientX;
+        svcTouchCurrentX = svcTouchStartX;
+      }, { passive: true });
+
+      svcStage.addEventListener('touchmove', (e) => {
+        svcTouchCurrentX = e.touches[0].clientX;
+      }, { passive: true });
+
+      svcStage.addEventListener('touchend', () => {
+        if (svcTouchStartX === null) return;
+        const delta = svcTouchCurrentX - svcTouchStartX;
+        if (Math.abs(delta) > 50) { svcMove(delta < 0 ? 1 : -1); }
+        svcTouchStartX = null;
+        svcTouchCurrentX = null;
       });
     }
 
