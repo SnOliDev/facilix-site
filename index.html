@@ -3918,6 +3918,29 @@
       });
     }
 
+    const spShotsTrack = document.querySelector('.sp-shots-track');
+    if (spShotsTrack) {
+      let spShotsTouchStartX = null;
+      let spShotsTouchCurrentX = null;
+
+      spShotsTrack.addEventListener('touchstart', (e) => {
+        spShotsTouchStartX = e.touches[0].clientX;
+        spShotsTouchCurrentX = spShotsTouchStartX;
+      }, { passive: true });
+
+      spShotsTrack.addEventListener('touchmove', (e) => {
+        spShotsTouchCurrentX = e.touches[0].clientX;
+      }, { passive: true });
+
+      spShotsTrack.addEventListener('touchend', () => {
+        if (spShotsTouchStartX === null) return;
+        const delta = spShotsTouchCurrentX - spShotsTouchStartX;
+        if (Math.abs(delta) > 50) { spShotsMove(delta < 0 ? 1 : -1); }
+        spShotsTouchStartX = null;
+        spShotsTouchCurrentX = null;
+      });
+    }
+
     // ─── SchoolPilot screenshots carousel ───
     let schShotsIndex = 0;
     const schShots = document.querySelectorAll('.sch-shots-track .sch-shot');
