@@ -1285,6 +1285,92 @@
       .sp-shot { transition: none; }
     }
 
+    /* ─── SCHOOLPILOT SCREENSHOTS CAROUSEL ─── */
+    .sch-shots-section {
+      padding: 80px 0;
+      background: #1A1A2E;
+    }
+
+    .sch-shots-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .sch-shots-carousel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      max-width: 620px;
+      margin-inline: auto;
+    }
+
+    .sch-shots-arrow {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      background: #1A3C5E;
+      color: #fff;
+      font-size: 1.2rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform var(--transition), filter var(--transition);
+    }
+
+    .sch-shots-arrow:hover { transform: scale(1.08); filter: brightness(1.1); }
+
+    .sch-shots-track {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: min(500px, calc(100vw - 172px));
+      overflow: hidden;
+    }
+
+    .sch-shot {
+      grid-area: 1 / 1;
+      width: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(.94);
+      transition: transform .4s ease, opacity .4s ease;
+      text-align: center;
+    }
+
+    .sch-shot.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    .sch-shot img {
+      max-width: 100%;
+      max-height: 500px;
+      object-fit: contain;
+      border-radius: 12px;
+      display: block;
+      margin-inline: auto;
+    }
+
+    .sch-shot figcaption {
+      margin-top: 14px;
+      font-size: .9rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.75);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sch-shot { transition: none; }
+    }
+
     /* ─── WHATSAPP FLOAT ─── */
     .whatsapp-float {
       position: fixed;
@@ -2525,6 +2611,45 @@
             <div class="view-feat-name">Rapports PDF</div>
             <p class="view-feat-desc">Rapports complets pour la direction : finances, effectifs, résultats académiques — exportables en PDF.</p>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="sch-shots-section">
+      <div class="container">
+        <h2 class="sch-shots-title">Aperçu de l'application</h2>
+        <div class="sch-shots-carousel">
+          <button class="sch-shots-arrow sch-shots-prev" onclick="schShotsMove(-1)" aria-label="Capture précédente">&#8592;</button>
+          <div class="sch-shots-track">
+            <figure class="sch-shot">
+              <img src="images/schoolpilot/01_ecran_de_connexion.png" alt="Écran de connexion SchoolPilot" loading="lazy">
+              <figcaption>Écran de connexion</figcaption>
+            </figure>
+            <figure class="sch-shot">
+              <img src="images/schoolpilot/02_menu_principal.png" alt="Menu principal et tableau de bord SchoolPilot" loading="lazy">
+              <figcaption>Menu principal</figcaption>
+            </figure>
+            <figure class="sch-shot">
+              <img src="images/schoolpilot/03_repartition_paiement_frais.png" alt="Répartition des paiements sur les frais scolaires" loading="lazy">
+              <figcaption>Répartition des paiements</figcaption>
+            </figure>
+            <figure class="sch-shot">
+              <img src="images/schoolpilot/04_recu_imprime.png" alt="Reçu de paiement imprimé" loading="lazy">
+              <figcaption>Reçu imprimé</figcaption>
+            </figure>
+            <figure class="sch-shot">
+              <img src="images/schoolpilot/05_saisie_notes.png" alt="Saisie des notes des élèves" loading="lazy">
+              <figcaption>Saisie des notes</figcaption>
+            </figure>
+            <figure class="sch-shot">
+              <img src="images/schoolpilot/06_transaction_caisse.png" alt="Formulaire de transaction en petite caisse" loading="lazy">
+              <figcaption>Transaction petite caisse</figcaption>
+            </figure>
+            <figure class="sch-shot">
+              <img src="images/schoolpilot/07_page_rapports.png" alt="Page de rapports SchoolPilot" loading="lazy">
+              <figcaption>Page de rapports</figcaption>
+            </figure>
+          </div>
+          <button class="sch-shots-arrow sch-shots-next" onclick="schShotsMove(1)" aria-label="Capture suivante">&#8594;</button>
         </div>
       </div>
     </div>
@@ -3790,6 +3915,50 @@
       spShotsCarousel.addEventListener('mouseenter', () => clearInterval(spShotsTimer));
       spShotsCarousel.addEventListener('mouseleave', () => {
         spShotsTimer = setInterval(() => spShotsMove(1), 4000);
+      });
+    }
+
+    // ─── SchoolPilot screenshots carousel ───
+    let schShotsIndex = 0;
+    const schShots = document.querySelectorAll('.sch-shots-track .sch-shot');
+    let schShotsTimer = setInterval(() => schShotsMove(1), 4000);
+
+    function schShotsMove(dir) {
+      schShotsIndex = (schShotsIndex + dir + schShots.length) % schShots.length;
+      schShots.forEach((s, i) => s.classList.toggle('active', i === schShotsIndex));
+      clearInterval(schShotsTimer);
+      schShotsTimer = setInterval(() => schShotsMove(1), 4000);
+    }
+    if (schShots.length) { schShots[0].classList.add('active'); }
+
+    const schShotsCarousel = document.querySelector('.sch-shots-carousel');
+    if (schShotsCarousel) {
+      schShotsCarousel.addEventListener('mouseenter', () => clearInterval(schShotsTimer));
+      schShotsCarousel.addEventListener('mouseleave', () => {
+        schShotsTimer = setInterval(() => schShotsMove(1), 4000);
+      });
+    }
+
+    const schShotsTrack = document.querySelector('.sch-shots-track');
+    if (schShotsTrack) {
+      let schShotsTouchStartX = null;
+      let schShotsTouchCurrentX = null;
+
+      schShotsTrack.addEventListener('touchstart', (e) => {
+        schShotsTouchStartX = e.touches[0].clientX;
+        schShotsTouchCurrentX = schShotsTouchStartX;
+      }, { passive: true });
+
+      schShotsTrack.addEventListener('touchmove', (e) => {
+        schShotsTouchCurrentX = e.touches[0].clientX;
+      }, { passive: true });
+
+      schShotsTrack.addEventListener('touchend', () => {
+        if (schShotsTouchStartX === null) return;
+        const delta = schShotsTouchCurrentX - schShotsTouchStartX;
+        if (Math.abs(delta) > 50) { schShotsMove(delta < 0 ? 1 : -1); }
+        schShotsTouchStartX = null;
+        schShotsTouchCurrentX = null;
       });
     }
 
