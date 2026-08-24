@@ -1199,6 +1199,55 @@
 
     .legal-body a { color: var(--brand); font-weight: 600; }
 
+    /* ─── SUBSCRIBE STEPS ─── */
+    .subscribe-steps {
+      list-style: none;
+      margin: 32px 0 40px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .subscribe-step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: var(--off-white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+    }
+
+    .subscribe-step-num {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--brand);
+      color: #fff;
+      font-weight: 800;
+      font-size: .95rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .subscribe-step-text strong {
+      display: block;
+      font-size: .98rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .subscribe-step-text p {
+      font-size: .88rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
     /* ─── SHOPPILOT SCREENSHOTS CAROUSEL ─── */
     .sp-shots-section {
       padding: 80px 0;
@@ -3682,6 +3731,63 @@
     </div>
   </div>
 
+  <!-- VIEW: S'abonner -->
+  <div id="view-subscribe" class="fx-view" aria-label="Vue S'abonner">
+    <div class="view-back-bar">
+      <div class="container">
+        <button class="view-back-btn" onclick="showHome()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Retour à l'accueil
+        </button>
+      </div>
+    </div>
+    <div class="legal-section">
+      <div class="container legal-container">
+        <h1 class="legal-title">Comment s'abonner à FaciliX</h1>
+        <p style="font-size:.95rem;color:var(--muted);line-height:1.75;margin-bottom:8px;">L'abonnement se fait en quelques étapes simples, sans formulaire de paiement en ligne.</p>
+        <ol class="subscribe-steps">
+          <li class="subscribe-step">
+            <span class="subscribe-step-num" aria-hidden="true">1</span>
+            <div class="subscribe-step-text">
+              <strong>Remplissez le formulaire de demande</strong>
+              <p>Indiquez vos informations et le produit qui vous intéresse (SchoolPilot ou ShopPilot).</p>
+            </div>
+          </li>
+          <li class="subscribe-step">
+            <span class="subscribe-step-num" aria-hidden="true">2</span>
+            <div class="subscribe-step-text">
+              <strong>Recevez vos instructions de paiement</strong>
+              <p>Vous recevez par WhatsApp ou email votre référence, le montant à payer et le numéro MonCash/NatCash correspondant.</p>
+            </div>
+          </li>
+          <li class="subscribe-step">
+            <span class="subscribe-step-num" aria-hidden="true">3</span>
+            <div class="subscribe-step-text">
+              <strong>Effectuez le paiement</strong>
+              <p>Réalisez la transaction MonCash ou NatCash en indiquant bien votre référence dans le mémo.</p>
+            </div>
+          </li>
+          <li class="subscribe-step">
+            <span class="subscribe-step-num" aria-hidden="true">4</span>
+            <div class="subscribe-step-text">
+              <strong>Votre accès est activé</strong>
+              <p>Sous 24h après confirmation du paiement, votre accès est activé et vous êtes prêt à démarrer.</p>
+            </div>
+          </li>
+        </ol>
+        <div style="text-align:center;">
+          <a id="subscribe-airtable-link" href="https://airtable.com/appaoO41gjciSwOH9/pagT5muajFLcXipJ6/form" target="_blank" rel="noopener" class="btn-view-cta" style="background:var(--brand);" aria-label="Faire ma demande d'abonnement FaciliX — ouvre le formulaire dans un nouvel onglet">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Faire ma demande
+          </a>
+          <p class="view-also">Une question avant de vous abonner ?
+            <a href="https://wa.me/50942739283" target="_blank" rel="noopener" class="view-also-btn" style="color:#25D366;text-decoration:none;" aria-label="Contacter FaciliX sur WhatsApp">Contactez-nous sur WhatsApp →</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ═══════════════════════════════════════════════════════ WHATSAPP FLOAT -->
   <a href="https://wa.me/50942739283" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Contacter FaciliX sur WhatsApp">
     <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.001 2c-5.514 0-9.996 4.478-9.996 9.997 0 1.762.462 3.482 1.34 4.997L2 22l5.144-1.352a9.96 9.96 0 0 0 4.856 1.238h.001c5.514 0 9.996-4.479 9.996-9.997C21.997 6.478 17.515 2 12.001 2zm5.848 15.845a8.302 8.302 0 0 1-5.848 2.423h-.001a8.317 8.317 0 0 1-4.244-1.163l-.305-.181-3.152.828.842-3.075-.198-.315a8.293 8.293 0 0 1-1.276-4.415c0-4.591 3.737-8.328 8.333-8.328 2.226 0 4.318.868 5.891 2.442a8.276 8.276 0 0 1 2.437 5.892c0 4.591-3.737 8.327-8.329 8.892z"/></svg>
@@ -4031,10 +4137,32 @@
       document.querySelectorAll('.fx-view').forEach(v => { v.style.display = 'none'; });
       const view = document.getElementById('view-' + id);
       if (view) { view.style.display = 'block'; }
+      if (id === 'subscribe') { updateSubscribeLink(); }
       window.scrollTo({ top: 0, behavior: 'instant' });
       if (!isPopStateNavigation) {
         history.pushState({ view: id }, '', '#' + id);
       }
+    }
+
+    function goToSubscribe(product) {
+      const view = document.getElementById('view-subscribe');
+      if (view) {
+        if (product) {
+          view.dataset.product = product;
+        } else {
+          delete view.dataset.product;
+        }
+      }
+      showView('subscribe');
+    }
+
+    function updateSubscribeLink() {
+      const view = document.getElementById('view-subscribe');
+      const link = document.getElementById('subscribe-airtable-link');
+      if (!view || !link) return;
+      const base = 'https://airtable.com/appaoO41gjciSwOH9/pagT5muajFLcXipJ6/form';
+      const product = view.dataset.product;
+      link.href = product ? `${base}?prefill_Produit=${encodeURIComponent(product)}` : base;
     }
 
     function navigateTo(sectionId) {
@@ -4078,10 +4206,7 @@
       });
 
       subscribeBtn.addEventListener('click', () => {
-        const active = card.querySelector('.pricing-toggle-btn.active');
-        const period = active ? active.dataset.period : 'monthly';
-        const label = period === 'yearly' ? card.dataset.yearlyLabel : card.dataset.monthlyLabel;
-        subscribeTo(label);
+        goToSubscribe('SchoolPilot');
       });
     }
 
@@ -4112,10 +4237,7 @@
       });
 
       subscribeBtn.addEventListener('click', () => {
-        const active = card.querySelector('.pricing-toggle-btn.active');
-        const period = active ? active.dataset.period : 'monthly';
-        const label = period === 'yearly' ? card.dataset.yearlyLabel : card.dataset.monthlyLabel;
-        subscribeTo(label);
+        goToSubscribe('ShopPilot');
       });
     }
 
