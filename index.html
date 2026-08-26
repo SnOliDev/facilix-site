@@ -114,6 +114,58 @@
     }
 
     /* ─── HEADER ─── */
+    .recruitment-banner {
+      background: linear-gradient(90deg,#312E81 0%,#4F46E5 100%);
+      color: #fff;
+      padding: 10px 0;
+    }
+
+    .recruitment-banner-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      row-gap: 6px;
+      gap: 16px;
+    }
+
+    .recruitment-banner-text {
+      flex: 1;
+      min-width: 200px;
+      text-align: center;
+      font-size: .85rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .recruitment-banner-text a {
+      color: #fff;
+      text-decoration: underline;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .recruitment-banner-close {
+      flex-shrink: 0;
+      background: rgba(255,255,255,.15);
+      border: none;
+      color: #fff;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background var(--transition);
+    }
+
+    .recruitment-banner-close:hover { background: rgba(255,255,255,.3); }
+
+    @media (max-width: 600px) {
+      .recruitment-banner-text { font-size: .78rem; line-height: 1.4; }
+    }
+
     #header {
       position: sticky;
       top: 0;
@@ -2083,6 +2135,16 @@
 </head>
 <body>
 
+  <!-- ═══════════════════════════════════════════════════════ RECRUITMENT BANNER -->
+  <div id="recruitmentBanner" class="recruitment-banner" role="region" aria-label="Annonce de recrutement">
+    <div class="container recruitment-banner-inner">
+      <p class="recruitment-banner-text">🤝 FaciliX recrute des agents commerciaux — rémunération à la commission. <a href="#" onclick="showView('recrutement'); return false;">Voir l'offre →</a></p>
+      <button type="button" class="recruitment-banner-close" id="recruitmentBannerClose" aria-label="Fermer l'annonce">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </div>
+
   <!-- ═══════════════════════════════════════════════════════ HEADER -->
   <header id="header">
     <div class="container">
@@ -2516,6 +2578,7 @@
             <li><a href="#" onclick="showView('contact'); return false;">contact@facilix.com</a></li>
             <li><a href="tel:+50942739283">+509 4273-9283</a></li>
             <li><a href="#cta">Demander une démo</a></li>
+            <li><a href="#" onclick="showView('recrutement'); return false;">Nous recrutons</a></li>
           </ul>
         </div>
       </div>
@@ -3608,6 +3671,15 @@
 
         </div>
 
+        <div class="why-detail-cta" style="background:linear-gradient(135deg,#312E81 0%,#4F46E5 100%);border-radius:var(--radius);padding:36px 32px;margin-bottom:40px;">
+          <h3 style="color:#fff;font-size:1.15rem;font-weight:800;margin-bottom:8px;">FaciliX recrute des agents commerciaux</h3>
+          <p style="color:rgba(255,255,255,.85);font-size:.9rem;margin-bottom:20px;">Rémunération à la commission — rejoignez une équipe flexible et motivée.</p>
+          <a href="#" onclick="showView('recrutement'); return false;" class="btn-view-cta" style="background:#fff;color:#312E81;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            En savoir plus
+          </a>
+        </div>
+
         <div class="why-detail-cta">
           <a href="#" onclick="showView('contact'); return false;" class="btn-view-cta" style="background:#1A3C5E;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -3824,6 +3896,124 @@
           <p class="view-also">Une question avant de vous abonner ?
             <a href="https://wa.me/50942739283" target="_blank" rel="noopener" class="view-also-btn" style="color:#25D366;text-decoration:none;" aria-label="Contacter FaciliX sur WhatsApp">Contactez-nous sur WhatsApp →</a>
           </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW: Nous recrutons -->
+  <div id="view-recrutement" class="fx-view" aria-label="Vue Nous recrutons">
+    <div class="view-back-bar">
+      <div class="container">
+        <button class="view-back-btn" onclick="showHome()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Retour à l'accueil
+        </button>
+      </div>
+    </div>
+    <div class="view-hero" style="background:linear-gradient(160deg,#312E81 0%,#4F46E5 55%,#6366F1 100%);">
+      <div class="container view-hero-inner">
+        <span class="view-hero-tag">Rejoignez FaciliX</span>
+        <h1 class="view-hero-title">Recrutement d'agents commerciaux — Rémunération à la commission</h1>
+        <p class="view-hero-desc">FaciliX recherche des agents commerciaux indépendants pour promouvoir son application auprès d'institutions scolaires, d'entreprises et d'organismes. Une belle opportunité de collaboration flexible, rémunérée selon vos résultats.</p>
+      </div>
+    </div>
+    <div class="view-features-section">
+      <div class="container">
+        <h2 class="view-features-title">Le rôle en bref</h2>
+        <div class="view-features-grid">
+          <div class="view-feat-card" style="--view-accent:#4F46E5;">
+            <div class="view-feat-name">Votre mission</div>
+            <div class="view-feat-desc">
+              <ul style="margin:0;padding-left:18px;">
+                <li>Identifier et démarcher des institutions scolaires, entreprises et organismes intéressés par FaciliX</li>
+                <li>Présenter les solutions FaciliX (gestion scolaire, gestion commerciale, création de sites web) adaptées aux besoins de chaque prospect</li>
+                <li>Accompagner la mise en relation jusqu'à la signature du contrat</li>
+              </ul>
+            </div>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#4F46E5;">
+            <div class="view-feat-name">Rémunération</div>
+            <div class="view-feat-desc">
+              <ul style="margin:0;padding-left:18px;">
+                <li>Paiement exclusivement à la commission, selon les contrats effectivement conclus</li>
+                <li>Aucun salaire fixe — vous êtes rémunéré selon vos résultats</li>
+                <li>Barème de commission communiqué lors de l'entretien</li>
+              </ul>
+            </div>
+          </div>
+          <div class="view-feat-card" style="--view-accent:#4F46E5;">
+            <div class="view-feat-name">Profil recherché</div>
+            <div class="view-feat-desc">
+              <ul style="margin:0;padding-left:18px;">
+                <li>Excellent sens du relationnel et de la communication</li>
+                <li>Autonomie et motivation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form-section">
+      <div class="container">
+        <div class="contact-form-inner">
+          <h1 class="contact-form-title">Intéressé(e) à nous rejoindre ?</h1>
+          <p class="contact-form-sub">Remplissez ce formulaire, il ouvrira WhatsApp avec un message pré-rempli à nous envoyer.</p>
+          <form id="recruitForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="rec-name">Nom complet <span aria-hidden="true">*</span></label>
+                <input type="text" id="rec-name" required placeholder="Jean Dupont" autocomplete="name" />
+              </div>
+              <div class="form-group">
+                <label for="rec-sex">Sexe <span aria-hidden="true">*</span></label>
+                <select id="rec-sex" required>
+                  <option value="" disabled selected>Sélectionner…</option>
+                  <option value="Homme">Homme</option>
+                  <option value="Femme">Femme</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="rec-dob">Date de naissance <span aria-hidden="true">*</span></label>
+                <input type="date" id="rec-dob" required />
+              </div>
+              <div class="form-group">
+                <label for="rec-phone">Téléphone <span aria-hidden="true">*</span></label>
+                <input type="tel" id="rec-phone" required placeholder="+509 XXXX-XXXX" autocomplete="tel" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="rec-city">Ville <span aria-hidden="true">*</span></label>
+                <input type="text" id="rec-city" required placeholder="Saint-Marc" autocomplete="address-level2" />
+              </div>
+              <div class="form-group">
+                <label for="rec-dept">Département <span aria-hidden="true">*</span></label>
+                <select id="rec-dept" required>
+                  <option value="" disabled selected>Sélectionner…</option>
+                  <option value="Nord">Nord</option>
+                  <option value="Nord-Est">Nord-Est</option>
+                  <option value="Nord-Ouest">Nord-Ouest</option>
+                  <option value="Artibonite">Artibonite</option>
+                  <option value="Centre">Centre</option>
+                  <option value="Ouest">Ouest</option>
+                  <option value="Sud-Est">Sud-Est</option>
+                  <option value="Sud">Sud</option>
+                  <option value="Grand'Anse">Grand'Anse</option>
+                  <option value="Nippes">Nippes</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn-contact-submit" id="recruitSubmit" aria-label="Envoyer ma candidature de recrutement via WhatsApp">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+              Envoyer via WhatsApp
+            </button>
+            <div class="contact-msg error" id="recruitError" role="alert">
+              Veuillez remplir tous les champs obligatoires avant d'envoyer.
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -4342,6 +4532,61 @@
             contactSubmit.disabled = false;
             contactSubmit.innerHTML = submitOriginalHTML;
           });
+      });
+    }
+
+    // ─── Recrutement (WhatsApp) ───
+    const recruitForm = document.getElementById('recruitForm');
+    if (recruitForm) {
+      recruitForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name  = document.getElementById('rec-name').value.trim();
+        const sex   = document.getElementById('rec-sex').value;
+        const dob   = document.getElementById('rec-dob').value;
+        const phone = document.getElementById('rec-phone').value.trim();
+        const city  = document.getElementById('rec-city').value.trim();
+        const dept  = document.getElementById('rec-dept').value;
+        const recruitError = document.getElementById('recruitError');
+
+        if (!name || !sex || !dob || !phone || !city || !dept) {
+          recruitError.style.display = 'block';
+          return;
+        }
+        recruitError.style.display = 'none';
+
+        const message = `Bonjour, je suis ${name} (${sex}, né(e) le ${dob}), basé(e) à ${city}, département ${dept}, téléphone ${phone}. Je suis intéressé(e) par le recrutement d'agents commerciaux FaciliX.`;
+        const northDepts = ['Nord', 'Nord-Est', 'Nord-Ouest'];
+        const number = northDepts.includes(dept) ? '50940969009' : '50942739283';
+        window.open(`https://wa.me/${number}?text=${encodeURIComponent(message)}`, '_blank');
+      });
+    }
+
+    // ─── Bandeau recrutement ───
+    const recruitmentBanner = document.getElementById('recruitmentBanner');
+    const recruitmentBannerClose = document.getElementById('recruitmentBannerClose');
+    const RECRUITMENT_BANNER_KEY = 'fx_recruitment_banner_dismissed';
+
+    function updateRecruitmentBannerVisibility() {
+      if (!recruitmentBanner) return;
+      const dismissed = sessionStorage.getItem(RECRUITMENT_BANNER_KEY) === '1';
+      const onDedicatedView = Array.from(document.querySelectorAll('.fx-view')).some(v => v.style.display === 'block');
+      recruitmentBanner.style.display = (!dismissed && !onDedicatedView) ? '' : 'none';
+    }
+
+    if (recruitmentBanner) {
+      updateRecruitmentBannerVisibility();
+
+      if (recruitmentBannerClose) {
+        recruitmentBannerClose.addEventListener('click', () => {
+          sessionStorage.setItem(RECRUITMENT_BANNER_KEY, '1');
+          recruitmentBanner.style.display = 'none';
+        });
+      }
+
+      const recruitmentBannerObserver = new MutationObserver(updateRecruitmentBannerVisibility);
+      document.querySelectorAll('.fx-view').forEach(v => {
+        recruitmentBannerObserver.observe(v, { attributes: true, attributeFilter: ['style'] });
       });
     }
   </script>
