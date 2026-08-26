@@ -1929,6 +1929,27 @@
       margin-bottom: 20px;
     }
 
+    .pricing-price-original {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-decoration: line-through;
+      margin-right: 6px;
+    }
+
+    .pricing-promo-badge {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: .75rem;
+      font-weight: 700;
+      color: #7C2D12;
+      background: rgba(232,130,26,.14);
+      border-radius: 100px;
+      padding: 4px 12px;
+      margin-top: -10px;
+      margin-bottom: 20px;
+    }
+
     .pricing-features {
       list-style: none;
       display: flex;
@@ -2813,15 +2834,16 @@
             Demander une démo SchoolPilot
           </a>
 
-          <div class="pricing-card schoolpilot-pricing-card" style="--pricing-accent:#1A3C5E; text-align:left; max-width:320px; margin:32px auto 0;" data-monthly-label="Abonnement SchoolPilot — 5 000 HTG/mois" data-yearly-label="Abonnement SchoolPilot — 50 000 HTG/an">
+          <div class="pricing-card schoolpilot-pricing-card" style="--pricing-accent:#1A3C5E; text-align:left; max-width:320px; margin:32px auto 0;" data-monthly-label="Abonnement SchoolPilot — 5 000 HTG/mois" data-yearly-label="Abonnement SchoolPilot — 40 000 HTG/an">
             <div class="pricing-tag">Gestion Scolaire</div>
             <h3 class="pricing-name">SchoolPilot</h3>
             <div class="pricing-toggle" role="group" aria-label="Cycle de facturation SchoolPilot">
               <button type="button" class="pricing-toggle-btn active" data-period="monthly">Mensuel</button>
               <button type="button" class="pricing-toggle-btn" data-period="yearly">Annuel</button>
             </div>
-            <div class="pricing-price"><span class="pricing-price-amount">5 000</span> <span class="pricing-period">HTG/mois</span></div>
-            <div class="pricing-savings-badge" hidden>Économisez 10 000 HTG</div>
+            <div class="pricing-price"><span class="pricing-price-original" hidden>40 000</span><span class="pricing-price-amount">5 000</span> <span class="pricing-period">HTG/mois</span></div>
+            <div class="pricing-savings-badge" hidden>Économisez 30 000 HTG avec le plan annuel promotionnel</div>
+            <div class="pricing-promo-badge" hidden>Offre limitée — valable jusqu'au 7 septembre 2026</div>
             <button type="button" class="btn-pricing schoolpilot-subscribe-btn" style="background:#1A3C5E;">
               S'abonner à SchoolPilot
             </button>
@@ -2973,7 +2995,7 @@
               <button type="button" class="pricing-toggle-btn" data-period="yearly">Annuel</button>
             </div>
             <div class="pricing-price"><span class="pricing-price-amount">2 500</span> <span class="pricing-period">HTG/mois</span></div>
-            <div class="pricing-savings-badge" hidden>Économisez 5 000 HTG</div>
+            <div class="pricing-savings-badge" hidden>Économisez 5 000 HTG avec le plan annuel</div>
             <button type="button" class="btn-pricing shoppilot-subscribe-btn" style="background:#E8821A;">
               S'abonner à ShopPilot
             </button>
@@ -3005,15 +3027,16 @@
         <h2 class="view-features-title">Nos abonnements</h2>
         <div class="pricing-grid">
 
-          <div class="pricing-card schoolpilot-pricing-card" style="--pricing-accent:#1A3C5E;" data-monthly-label="Abonnement SchoolPilot — 5 000 HTG/mois" data-yearly-label="Abonnement SchoolPilot — 50 000 HTG/an">
+          <div class="pricing-card schoolpilot-pricing-card" style="--pricing-accent:#1A3C5E;" data-monthly-label="Abonnement SchoolPilot — 5 000 HTG/mois" data-yearly-label="Abonnement SchoolPilot — 40 000 HTG/an">
             <div class="pricing-tag">Gestion Scolaire</div>
             <h3 class="pricing-name">SchoolPilot</h3>
             <div class="pricing-toggle" role="group" aria-label="Cycle de facturation SchoolPilot">
               <button type="button" class="pricing-toggle-btn active" data-period="monthly">Mensuel</button>
               <button type="button" class="pricing-toggle-btn" data-period="yearly">Annuel</button>
             </div>
-            <div class="pricing-price"><span class="pricing-price-amount">5 000</span> <span class="pricing-period">HTG/mois</span></div>
-            <div class="pricing-savings-badge" hidden>Économisez 10 000 HTG</div>
+            <div class="pricing-price"><span class="pricing-price-original" hidden>40 000</span><span class="pricing-price-amount">5 000</span> <span class="pricing-period">HTG/mois</span></div>
+            <div class="pricing-savings-badge" hidden>Économisez 30 000 HTG avec le plan annuel promotionnel</div>
+            <div class="pricing-promo-badge" hidden>Offre limitée — valable jusqu'au 7 septembre 2026</div>
             <ul class="pricing-features">
               <li>Classes &amp; élèves</li>
               <li>Bulletins &amp; notes</li>
@@ -3033,7 +3056,7 @@
               <button type="button" class="pricing-toggle-btn" data-period="yearly">Annuel</button>
             </div>
             <div class="pricing-price"><span class="pricing-price-amount">2 500</span> <span class="pricing-period">HTG/mois</span></div>
-            <div class="pricing-savings-badge" hidden>Économisez 5 000 HTG</div>
+            <div class="pricing-savings-badge" hidden>Économisez 5 000 HTG avec le plan annuel</div>
             <ul class="pricing-features">
               <li>Boutique en ligne personnalisée</li>
               <li>Paiement mobile intégré</li>
@@ -3728,7 +3751,7 @@
                   <option value="Demander une démo SchoolPilot">Demander une démo SchoolPilot</option>
                   <option value="Demander une démo ShopPilot">Demander une démo ShopPilot</option>
                   <option value="Abonnement SchoolPilot — 5 000 HTG/mois">Abonnement SchoolPilot — 5 000 HTG/mois</option>
-                  <option value="Abonnement SchoolPilot — 50 000 HTG/an">Abonnement SchoolPilot — 50 000 HTG/an</option>
+                  <option value="Abonnement SchoolPilot — 40 000 HTG/an">Abonnement SchoolPilot — 40 000 HTG/an</option>
                   <option value="Abonnement ShopPilot — 2 500 HTG/mois">Abonnement ShopPilot — 2 500 HTG/mois</option>
                   <option value="Abonnement ShopPilot — 25 000 HTG/an">Abonnement ShopPilot — 25 000 HTG/an</option>
                   <option value="Service Brand Visuals">Service Brand Visuals</option>
@@ -4413,11 +4436,22 @@
     }
 
     // ─── SchoolPilot pricing toggle (Mensuel / Annuel) ───
+    const SCHOOLPILOT_PROMO_DEADLINE = new Date('2026-09-07T23:59:59');
+
+    function getSchoolPilotYearlyPricing() {
+      if (new Date() <= SCHOOLPILOT_PROMO_DEADLINE) {
+        return { amount: '30 000', original: '40 000', savings: '30 000', promo: true };
+      }
+      return { amount: '40 000', original: null, savings: '20 000', promo: false };
+    }
+
     function initSchoolPilotPricing(card) {
       const toggleBtns = card.querySelectorAll('.pricing-toggle-btn');
+      const priceOriginal = card.querySelector('.pricing-price-original');
       const priceAmount = card.querySelector('.pricing-price-amount');
       const pricePeriod = card.querySelector('.pricing-period');
       const savingsBadge = card.querySelector('.pricing-savings-badge');
+      const promoBadge = card.querySelector('.pricing-promo-badge');
       const subscribeBtn = card.querySelector('.schoolpilot-subscribe-btn');
 
       toggleBtns.forEach(btn => {
@@ -4425,13 +4459,27 @@
           toggleBtns.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
           if (btn.dataset.period === 'yearly') {
-            priceAmount.textContent = '50 000';
+            const pricing = getSchoolPilotYearlyPricing();
+            priceAmount.textContent = pricing.amount;
             pricePeriod.textContent = 'HTG/an';
+            savingsBadge.textContent = pricing.promo
+              ? `Économisez ${pricing.savings} HTG avec le plan annuel promotionnel`
+              : `Économisez ${pricing.savings} HTG avec le plan annuel`;
             savingsBadge.hidden = false;
+            if (pricing.promo) {
+              priceOriginal.textContent = pricing.original;
+              priceOriginal.hidden = false;
+              promoBadge.hidden = false;
+            } else {
+              priceOriginal.hidden = true;
+              promoBadge.hidden = true;
+            }
           } else {
             priceAmount.textContent = '5 000';
             pricePeriod.textContent = 'HTG/mois';
             savingsBadge.hidden = true;
+            priceOriginal.hidden = true;
+            promoBadge.hidden = true;
           }
         });
       });
