@@ -2178,8 +2178,8 @@
         <nav aria-label="Navigation principale">
           <a href="#products" onclick="navigateTo('products'); return false;">Produits</a>
           <a href="#" onclick="showView('pricing'); return false;">Tarifs</a>
-          <a href="#services" onclick="navigateTo('services'); return false;">Services</a>
-          <a href="#why" onclick="navigateTo('why'); return false;">Pourquoi nous</a>
+          <a href="#" onclick="showView('all-services'); return false;">Services</a>
+          <a href="#" onclick="showView('why'); return false;">Pourquoi nous</a>
           <a href="#" onclick="showView('contact'); return false;">Contact</a>
           <a href="#" class="nav-cta" onclick="showView('contact'); return false;">Demander une démo</a>
         </nav>
@@ -2193,8 +2193,8 @@
     <nav class="mobile-nav" id="mobileNav" aria-label="Navigation mobile">
       <a href="#products" onclick="navigateTo('products'); return false;">Produits</a>
       <a href="#" onclick="showView('pricing'); return false;">Tarifs</a>
-      <a href="#services" onclick="navigateTo('services'); return false;">Services</a>
-      <a href="#why" onclick="navigateTo('why'); return false;">Pourquoi nous</a>
+      <a href="#" onclick="showView('all-services'); return false;">Services</a>
+      <a href="#" onclick="showView('why'); return false;">Pourquoi nous</a>
       <a href="#" onclick="showView('contact'); return false;">Contact</a>
       <a href="#" class="nav-cta" onclick="showView('contact'); return false;">Demander une démo</a>
     </nav>
@@ -2451,63 +2451,6 @@
         <h2 class="section-title" id="why-heading">Ancrés dans votre réalité,<br />pensés pour votre réussite</h2>
         <p class="section-sub">Nous construisons pour les réalités du terrain, pas pour un marché générique.</p>
       </header>
-
-      <div class="why-grid">
-
-        <article class="why-card" style="background:linear-gradient(135deg,#1A3C5E 0%,#2D9E6B 100%);">
-          <div class="why-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
-            </svg>
-          </div>
-          <h3 class="why-title">Né du terrain</h3>
-          <p class="why-desc">FaciliX a été créé par des professionnels qui ont vécu les mêmes défis que vous. Nous n'inventons pas vos problèmes — nous les connaissons.</p>
-        </article>
-
-        <article class="why-card" style="background:linear-gradient(135deg,#1A3C5E 0%,#E8821A 100%);">
-          <div class="why-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M20.5 11H19V7a2 2 0 0 0-2-2h-4V3.5a2.5 2.5 0 0 0-5 0V5H4a2 2 0 0 0-2 2v3.8h1.5a2.7 2.7 0 0 1 0 5.4H2V20a2 2 0 0 0 2 2h3.8v-1.5a2.7 2.7 0 0 1 5.4 0V22H17a2 2 0 0 0 2-2v-4h1.5a2.5 2.5 0 0 0 0-5z"/>
-            </svg>
-          </div>
-          <h3 class="why-title">Écosystème intégré</h3>
-          <p class="why-desc">Un compte, plusieurs outils. Gérez école, commerce et activités depuis une seule plateforme connectée.</p>
-        </article>
-
-        <article class="why-card" style="background:linear-gradient(135deg,#1A3C5E 0%,#E83A2D 100%);">
-          <div class="why-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-            </svg>
-          </div>
-          <h3 class="why-title">À votre écoute</h3>
-          <p class="why-desc">Nous accompagnons votre transition numérique avec un support qui vous comprend vraiment.</p>
-        </article>
-
-        <article class="why-card" style="background:linear-gradient(135deg,#1A3C5E 0%,#D63384 100%);">
-          <div class="why-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              <rect x="9.5" y="11" width="5" height="4" rx="1"/>
-              <path d="M10.5 11V9.5a1.5 1.5 0 0 1 3 0V11"/>
-            </svg>
-          </div>
-          <h3 class="why-title">Vos données, uniquement les vôtres</h3>
-          <p class="why-desc">Confidentialité totale. Vos données ne sont jamais partagées, revendues ou exploitées. Elles vous appartiennent.</p>
-        </article>
-
-        <article class="why-card" style="background:linear-gradient(135deg,#1A3C5E 0%,#0AABBD 100%);">
-          <div class="why-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
-              <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
-            </svg>
-          </div>
-          <h3 class="why-title">Un support qui vous comprend</h3>
-          <p class="why-desc">Pas de bot, pas de ticket sans réponse. Une équipe disponible, qui parle votre langue et connaît votre réalité.</p>
-        </article>
-
-      </div>
 
       <div class="why-more-cta">
         <button type="button" class="btn-view-cta" style="background:#1A3C5E;" onclick="showView('why')" aria-label="En savoir plus sur pourquoi choisir FaciliX">
